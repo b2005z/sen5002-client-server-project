@@ -1,0 +1,179 @@
+<!-- ============================================================
+     pages/student.html
+     Student Login Screen
+     Email + password form with validation
+     Cardiff Met University Navigation App
+     ============================================================ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Login — Cardiff Met Navigator</title>
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <style>
+    body {
+      background: radial-gradient(ellipse at 40% 60%, #3a1a15 0%, #1a0f0d 70%);
+    }
+    .login-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+    .form-section {
+      width: 100%;
+      margin-top: 18px;
+      display: flex;
+      flex-direction: column;
+    }
+    .form-row-center {
+      display: flex;
+      justify-content: center;
+    }
+    .spacer { flex: 1; }
+    .back-row {
+      display: flex;
+      justify-content: center;
+      margin-top: 16px;
+    }
+    .error-msg {
+      color: var(--red-dark);
+      font-size: 12px;
+      margin-top: 6px;
+      display: none;
+    }
+    .error-msg.show { display: block; }
+  </style>
+</head>
+<body>
+
+  <div class="login-wrap">
+    <div class="mobile-wrap">
+
+      <!-- Mode badge -->
+      <div class="mode-badge">Student</div>
+
+      <!-- Logo -->
+      <div style="margin-top: 32px;">
+        <div class="logo-box"></div>
+      </div>
+
+      <!-- App title -->
+      <div class="app-title" style="margin-top:14px;">
+        Cardiff Metropolitan University<br>Navigation App
+      </div>
+
+      <!-- Login form -->
+      <div class="form-section">
+        <input
+          class="input-field"
+          type="email"
+          id="student-email"
+          placeholder="Student Email"
+          autocomplete="email"
+        >
+        <input
+          class="input-field"
+          type="password"
+          id="student-pass"
+          placeholder="••••••••••"
+          autocomplete="current-password"
+        >
+
+        <span class="error-msg" id="login-error">
+          Please enter your email and password.
+        </span>
+
+        <div class="form-row-center">
+          <button class="btn-submit" onclick="handleStudentLogin()">Submit</button>
+        </div>
+
+        <button class="btn-secondary" onclick="showForgotModal()">
+          Forgot Password
+        </button>
+      </div>
+
+      <div class="spacer"></div>
+
+      <!-- Back button -->
+      <div class="back-row">
+        <button class="btn-secondary" onclick="location.href='welcome.html'">← Back</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Forgot Password Modal -->
+  <div class="modal-overlay" id="forgot-modal" onclick="closeForgotModal(event)">
+    <div class="modal-box" id="forgot-box">
+      <h2>Forgot Password</h2>
+      <p>
+        Please contact IT Services to reset your Cardiff Met password.
+        <br><br>
+        <strong>Email:</strong> itservices@cardiffmet.ac.uk<br>
+        <strong>Phone:</strong> +44 (0)29 2041 7000<br><br>
+        Alternatively visit the IT Services desk in Block F, Level 1.
+      </p>
+      <button class="modal-close" onclick="document.getElementById('forgot-modal').classList.remove('open')">
+        Close
+      </button>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <script>
+    function handleStudentLogin() {
+      const email = document.getElementById('student-email').value.trim();
+      const pass  = document.getElementById('student-pass').value.trim();
+      const err   = document.getElementById('login-error');
+
+      if (!email || !pass) {
+        err.textContent = 'Please enter your email and password.';
+        err.classList.add('show');
+        return;
+      }
+      if (!email.includes('@')) {
+        err.textContent = 'Please enter a valid email address.';
+        err.classList.add('show');
+        return;
+      }
+
+      err.classList.remove('show');
+
+      /* Save mode to sessionStorage so building page knows the mode */
+      sessionStorage.setItem('userMode', 'Student');
+
+      /* Navigate to building page */
+      location.href = 'building.html';
+    }
+
+    function showForgotModal() {
+      document.getElementById('forgot-modal').classList.add('open');
+    }
+    function closeForgotModal(e) {
+      if (e.target.id === 'forgot-modal') {
+        document.getElementById('forgot-modal').classList.remove('open');
+      }
+    }
+
+    /* Allow submit on Enter key */
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Enter') handleStudentLogin();
+    });
+
+    /* Toast helper */
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(() => t.classList.remove('show'), 2800);
+    }
+  </script>
+
+</body>
+</html>

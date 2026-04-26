@@ -1,0 +1,60 @@
+<!-- ============================================================
+     pages/welcome.html
+     Welcome Screen — Mode Selection
+     Standalone page with Student / Staff / Guest buttons
+     Cardiff Met University Navigation App
+     ============================================================ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cardiff Met Navigator</title>
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <style>
+    body {
+      background: radial-gradient(ellipse at 50% 40%, #3a1a15 0%, #1a0f0d 70%);
+    }
+    .welcome-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+    .mode-buttons {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 28px;
+      gap: 0;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="welcome-wrap">
+    <div class="mobile-wrap">
+
+      <!-- Logo placeholder -->
+      <div class="logo-box"></div>
+
+      <!-- App title -->
+      <div class="app-title">
+        Cardiff Metropolitan University<br>Navigation App
+      </div>
+      <div class="app-subtitle">Modes</div>
+
+      <!-- Mode buttons -->
+      <div class="mode-buttons">
+        <button class="btn-mode" onclick="location.href='student.html'">Student</button>
+        <button class="btn-mode" onclick="location.href='staff.html'">Staff</button>
+        <button class="btn-mode" onclick="location.href='guest.html'">Guest</button>
+      </div>
+
+    </div>
+  </div>
+
+</body>
+</html>

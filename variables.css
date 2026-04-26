@@ -1,0 +1,63 @@
+/* ============================================================
+   variables.css
+   Global CSS custom properties & resets
+   Cardiff Met University Navigation App
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+:root {
+  /* ── Colour Palette ── */
+  --blush:        #f9cdc8;
+  --blush-dark:   #f0a89f;
+  --blush-light:  #fde8e5;
+  --cream:        #fffaf9;
+  --red-text:     #c0392b;
+  --red-dark:     #922b21;
+  --gold:         #f0c060;
+  --gold-dark:    #d4a017;
+  --gold-border:  #d4a017;
+  --white:        #ffffff;
+  --text-main:    #2c1a17;
+  --text-muted:   #7a5a55;
+
+  /* ── Shadows ── */
+  --shadow-sm: 0 2px 8px  rgba(180, 80, 60, 0.10);
+  --shadow-md: 0 6px 24px rgba(180, 80, 60, 0.13);
+  --shadow-lg: 0 16px 48px rgba(180, 80, 60, 0.18);
+
+  /* ── Border Radii ── */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+
+  /* ── Typography ── */
+  --font-display: 'Playfair Display', serif;
+  --font-body:    'DM Sans', sans-serif;
+}
+
+/* ── Reset ── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  font-family: var(--font-body);
+  background: #1a0f0d;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar        { width: 6px; }
+::-webkit-scrollbar-track  { background: transparent; }
+::-webkit-scrollbar-thumb  { background: var(--blush-dark); border-radius: 3px; }

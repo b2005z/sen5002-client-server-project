@@ -1,4 +1,3 @@
-# sen5002-client-server-project
 # Cardiff Metropolitan University Navigation App
 ## SEN5002 — Smart Campus Navigation System
 

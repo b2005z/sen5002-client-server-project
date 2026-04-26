@@ -1,0 +1,112 @@
+<!-- ============================================================
+     pages/building.html
+     Desktop Building Navigation Screen
+     Header · Block label · Map · Info panel · Footer
+     Cardiff Met University Navigation App
+     ============================================================ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Campus Map — Cardiff Met Navigator</title>
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <style>
+    body {
+      background: radial-gradient(ellipse at 50% 50%, #3a1a15 0%, #1a0f0d 70%);
+    }
+    .page-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page-wrap">
+    <div class="desktop-wrap">
+
+      <!-- ── HEADER ── -->
+      <div class="desk-header">
+        <div class="logo-box-sm"></div>
+        <div class="desk-header-title">
+          Cardiff Metropolitan University Navigation App
+        </div>
+        <div class="desk-header-right">
+          <div class="desk-header-mode" id="mode-display">Student</div>
+          <div class="desk-header-btns">
+            <button class="btn-nav" onclick="showModal('about')">About Us</button>
+            <button class="btn-nav" onclick="showModal('contact')">Contact Us</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── TOOLBAR ── -->
+      <div class="desk-toolbar">
+        <div class="block-label-box" id="block-label">Block A</div>
+        <div class="arrow-group">
+          <button class="btn-arrow" onclick="prevBlock()" title="Previous building">▲</button>
+          <button class="btn-arrow" onclick="nextBlock()" title="Next building">▼</button>
+        </div>
+      </div>
+
+      <!-- ── MAP AREA ── -->
+      <div class="desk-map-area">
+        <div class="desk-map-box map-placeholder" id="map-box"></div>
+      </div>
+
+      <!-- ── BUILDING INFO PANEL ── -->
+      <div class="building-info" id="building-info-panel">
+        <h3 id="bi-name">Block A — Main Academic Building</h3>
+        <p  id="bi-desc">Loading building information…</p>
+        <div class="building-tags" id="bi-tags"></div>
+      </div>
+
+      <!-- ── FOOTER ── -->
+      <div class="desk-footer">
+        <button class="desk-footer-help" onclick="showModal('help')">Help</button>
+        <button class="btn-signout" onclick="location.href='signout.html'">Sign Out</button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ── MODAL ── -->
+  <div class="modal-overlay" id="modal" onclick="closeModal(event)">
+    <div class="modal-box" id="modal-box">
+      <h2 id="modal-title">Title</h2>
+      <p  id="modal-body">Body</p>
+      <button class="modal-close" onclick="closeModalDirect()">Close</button>
+    </div>
+  </div>
+
+  <!-- ── TOAST ── -->
+  <div class="toast" id="toast"></div>
+
+  <!-- ── SCRIPTS ── -->
+  <script src="../js/data/buildings.js"></script>
+  <script src="../js/data/modals.js"></script>
+  <script src="../js/toast.js"></script>
+  <script src="../js/modal.js"></script>
+  <script src="../js/navigation.js"></script>
+
+  <script>
+    /* ── On page load ── */
+    window.addEventListener('DOMContentLoaded', () => {
+      /* Restore mode from session */
+      const mode = sessionStorage.getItem('userMode') || 'Guest';
+      document.getElementById('mode-display').textContent = mode;
+
+      /* Show first building */
+      updateBuildingDisplay();
+
+      showToast('Welcome! Signed in as ' + mode);
+    });
+  </script>
+
+</body>
+</html>

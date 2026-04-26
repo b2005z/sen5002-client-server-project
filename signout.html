@@ -1,0 +1,61 @@
+<!-- ============================================================
+     pages/signout.html
+     Sign Out Confirmation Screen
+     Cardiff Met University Navigation App
+     ============================================================ -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Out — Cardiff Met Navigator</title>
+  <link rel="stylesheet" href="../css/variables.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <style>
+    body {
+      background: radial-gradient(ellipse at 50% 50%, #3a1a15 0%, #1a0f0d 70%);
+    }
+    .page-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page-wrap">
+    <div class="signout-card">
+      <h2>Sign out?</h2>
+      <p>
+        Are you sure you want to sign out of the<br>
+        Cardiff Met Navigation App?
+      </p>
+      <div class="signout-btns">
+        <button class="btn-nav"     onclick="location.href='building.html'">Cancel</button>
+        <button class="btn-signout" onclick="confirmSignOut()">Sign Out</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
+
+  <script>
+    function confirmSignOut() {
+      /* Clear session */
+      sessionStorage.removeItem('userMode');
+
+      /* Brief toast then redirect */
+      const t = document.getElementById('toast');
+      t.textContent = 'Signed out successfully';
+      t.classList.add('show');
+
+      setTimeout(() => { location.href = 'welcome.html'; }, 1000);
+    }
+  </script>
+
+</body>
+</html>
