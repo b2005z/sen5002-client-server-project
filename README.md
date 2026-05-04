@@ -131,8 +131,8 @@ Open `css/variables.css` and edit the `:root` block:
 - JS files: `camelCase.js`
 - HTML pages: `lowercase.html`
 - Data files: `lowercase.js` inside `js/data/`
-
-
-- 
 ## Branch: feature/docker
 This branch contains the Docker configuration for the Cardiff Met Navigator.
+
+- 
+
