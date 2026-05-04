@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 110 110" role="img">
+  <title>Cardiff Met Navigator Logo</title>
+  <desc>A compass rose inside a location pin drop, in Cardiff Met red and gold</desc>
+
+  <!-- Pin drop shape -->
+  <path d="M55,8 C35,8 19,24 19,44 C19,68 55,102 55,102 C55,102 91,68 91,44 C91,24 75,8 55,8 Z" fill="#c0392b"/>
+
+  <!-- Inner white circle -->
+  <circle cx="55" cy="43" r="24" fill="#ffffff"/>
+
+  <!-- Compass arms -->
+  <!-- North (bold, gold) -->
+  <polygon points="55,22 58.5,36 51.5,36" fill="#c0392b"/>
+  <!-- South (faded) -->
+  <polygon points="55,64 58.5,50 51.5,50" fill="#c0392b" opacity="0.35"/>
+  <!-- East (gold) -->
+  <polygon points="76,43 62,39.5 62,46.5" fill="#f0c060"/>
+  <!-- West (gold faded) -->
+  <polygon points="34,43 48,39.5 48,46.5" fill="#f0c060" opacity="0.6"/>
+
+  <!-- Tick ring -->
+  <circle cx="55" cy="43" r="18" fill="none" stroke="#c0392b" stroke-width="0.7" stroke-dasharray="2 5" stroke-linecap="round" opacity="0.5"/>
+
+  <!-- Centre dot -->
+  <circle cx="55" cy="43" r="5.5" fill="#c0392b"/>
+  <circle cx="55" cy="43" r="2.5" fill="#ffffff"/>
+
+  <!-- Drop shadow -->
+  <ellipse cx="55" cy="105" rx="14" ry="4" fill="#2c1a17" opacity="0.12"/>
+</svg>

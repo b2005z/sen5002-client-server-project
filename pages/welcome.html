@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cardiff Met Navigator</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: radial-gradient(ellipse at 50% 35%, #3a1a15, #1a0f0d);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .card {
+    width: 320px;
+    background: #f9cdc8;
+    border-radius: 28px;
+    padding: 36px 28px 32px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    box-shadow: 0 20px 60px rgba(0,0,0,.5);
+    animation: up .4s ease;
+  }
+  @keyframes up { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
+  .logo-wrap { width: 108px; height: 108px; }
+  .logo-wrap svg { width: 100%; height: 100%; }
+  .app-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px;
+    color: #c0392b;
+    text-align: center;
+    line-height: 1.35;
+    margin-top: 14px;
+  }
+  .app-sub {
+    font-size: 12px;
+    color: #7a5a55;
+    font-weight: 600;
+    margin-top: 4px;
+    letter-spacing: .8px;
+  }
+  .gold-rule {
+    width: 68px; height: 2px;
+    background: #f0c060;
+    border-radius: 1px;
+    margin: 10px auto 0;
+  }
+  .btn-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    margin-top: 28px;
+    width: 100%;
+  }
+  .btn-mode {
+    width: 190px;
+    padding: 13px 0;
+    background: #f0c060;
+    border: 1.5px solid #d4a017;
+    border-radius: 6px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: #2c1a17;
+    cursor: pointer;
+    transition: all .18s;
+  }
+  .btn-mode:hover {
+    background: #d4a017;
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 14px rgba(0,0,0,.2);
+  }
+</style>
+</head>
+<body>
+
+<div class="card">
+  <div class="logo-wrap">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 110 110">
+      <path d="M55,8 C35,8 19,24 19,44 C19,68 55,102 55,102 C55,102 91,68 91,44 C91,24 75,8 55,8 Z" fill="#c0392b"/>
+      <circle cx="55" cy="43" r="24" fill="#fff"/>
+      <polygon points="55,22 58.5,36 51.5,36" fill="#c0392b"/>
+      <polygon points="55,64 58.5,50 51.5,50" fill="#c0392b" opacity=".35"/>
+      <polygon points="76,43 62,39.5 62,46.5" fill="#f0c060"/>
+      <polygon points="34,43 48,39.5 48,46.5" fill="#f0c060" opacity=".6"/>
+      <circle cx="55" cy="43" r="18" fill="none" stroke="#c0392b" stroke-width=".7" stroke-dasharray="2 5" opacity=".5"/>
+      <circle cx="55" cy="43" r="5.5" fill="#c0392b"/>
+      <circle cx="55" cy="43" r="2.5" fill="#fff"/>
+      <ellipse cx="55" cy="105" rx="14" ry="4" fill="#2c1a17" opacity=".12"/>
+    </svg>
+  </div>
+
+  <div class="app-title">Cardiff Metropolitan University<br>Navigation App</div>
+  <div class="app-sub">SELECT MODE</div>
+  <div class="gold-rule"></div>
+
+  <div class="btn-group">
+    <button class="btn-mode" onclick="window.location.href='student.html'">Student</button>
+    <button class="btn-mode" onclick="window.location.href='staff.html'">Staff</button>
+    <button class="btn-mode" onclick="window.location.href='guest.html'">Guest</button>
+  </div>
+</div>
+
+</body>
+</html>

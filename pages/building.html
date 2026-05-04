@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Campus Map — Cardiff Met Navigator</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: radial-gradient(ellipse at 50% 30%, #3a1a15, #1a0f0d);
+    min-height: 100vh;
+    display: flex; align-items: center; justify-content: center; padding: 20px;
+  }
+  .card {
+    width: 860px; background: #f9cdc8; border-radius: 14px;
+    overflow: hidden; box-shadow: 0 24px 64px rgba(0,0,0,.45);
+    animation: up .4s ease;
+  }
+  @keyframes up { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
+
+  /* HEADER */
+  .hdr {
+    background: #f9cdc8; border-bottom: 1.5px solid #f0a89f;
+    padding: 12px 18px; display: flex; align-items: center; gap: 14px;
+  }
+  .logo { width: 68px; height: 68px; flex-shrink: 0; }
+  .logo svg { width: 100%; height: 100%; }
+  .hdr-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 17px; color: #c0392b; flex: 1;
+  }
+  .hdr-right { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
+  .mode-box {
+    background: #fff; border: 1.5px solid #d4a017; border-radius: 5px;
+    padding: 5px 16px; font-size: 13px; font-weight: 600;
+    color: #c0392b; min-width: 110px; text-align: center;
+  }
+  .hdr-btns { display: flex; gap: 8px; }
+  .btn {
+    font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600;
+    cursor: pointer; border-radius: 5px; transition: all .18s;
+  }
+  .btn-g { background: #f0c060; border: 1.5px solid #d4a017; color: #2c1a17; padding: 8px 18px; }
+  .btn-g:hover { background: #d4a017; color: #fff; }
+  .btn-so { background: #f0c060; border: 1.5px solid #d4a017; color: #2c1a17; padding: 7px 16px; }
+  .btn-so:hover { background: #c0392b; color: #fff; }
+
+  /* TOOLBAR */
+  .toolbar {
+    padding: 10px 18px; display: flex; align-items: center;
+    justify-content: space-between; border-bottom: 1px solid #f0a89f;
+  }
+  .blk-label {
+    background: #fff; border: 1.5px solid #c0392b; border-radius: 5px;
+    padding: 7px 22px; font-size: 14px; font-weight: 600;
+    color: #c0392b; min-width: 150px;
+  }
+  .arr-group { display: flex; }
+  .arr {
+    width: 44px; height: 40px; background: #7a8fa0; border: none;
+    color: #fff; font-size: 15px; cursor: pointer;
+    display: flex; align-items: center; justify-content: center; transition: background .18s;
+  }
+  .arr:hover { background: #4e6878; }
+  .arr:first-child { border-radius: 6px 0 0 6px; }
+  .arr:last-child  { border-radius: 0 6px 6px 0; }
+
+  /* MAP */
+  .map-area { padding: 18px 24px; display: flex; justify-content: center; }
+  .map-frame { width: 560px; background: #fff; border: 1.5px solid #aaa; border-radius: 6px; overflow: hidden; }
+  .ftabs { display: flex; border-bottom: 1px solid #e8d8d5; background: #fde8e5; }
+  .ftab {
+    flex: 1; padding: 7px 4px; font-family: 'DM Sans', sans-serif;
+    font-size: 11px; font-weight: 600; color: #7a5a55; border: none;
+    background: none; cursor: pointer; border-bottom: 2px solid transparent; transition: all .15s;
+  }
+  .ftab.active { color: #c0392b; border-bottom-color: #c0392b; background: #fff; }
+  .ftab:hover:not(.active) { color: #c0392b; }
+  .map-svg { display: block; width: 100%; transition: opacity .3s; }
+  .map-svg.fading { opacity: 0; }
+  .tip-strip {
+    text-align: center; font-size: 11px; color: #7a5a55;
+    padding: 5px 10px; background: #fff8f6;
+    border-top: 1px solid #f0e0dc; min-height: 24px;
+  }
+
+  /* LEGEND */
+  .legend { display: flex; gap: 10px; flex-wrap: wrap; padding: 0 24px 8px; }
+  .leg { display: flex; align-items: center; gap: 4px; font-size: 10px; color: #7a5a55; }
+  .leg-sq { width: 9px; height: 9px; border-radius: 2px; }
+
+  /* INFO STRIP */
+  .info {
+    margin: 0 24px 14px; background: #fff;
+    border: 1.5px solid #f0a89f; border-radius: 6px;
+    padding: 12px 16px; display: flex; gap: 18px; align-items: flex-start;
+  }
+  .info-main { flex: 1; }
+  .info-name { font-family: 'Playfair Display', serif; font-size: 15px; color: #c0392b; margin-bottom: 5px; }
+  .info-desc { font-size: 12px; color: #7a5a55; line-height: 1.6; }
+  .info-tags { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 8px; }
+  .tag {
+    background: #fde8e5; border: 1px solid #f0a89f;
+    border-radius: 20px; padding: 2px 9px;
+    font-size: 10px; color: #922b21; font-weight: 500;
+  }
+  .info-hrs { font-size: 11px; color: #7a5a55; white-space: nowrap; }
+  .info-hrs strong { color: #c0392b; display: block; font-size: 11px; margin-bottom: 2px; }
+
+  /* FOOTER */
+  .footer {
+    border-top: 1.5px solid #f0a89f; padding: 10px 18px;
+    display: flex; align-items: center; justify-content: space-between;
+  }
+  .help-btn {
+    font-size: 13px; font-weight: 600; color: #c0392b;
+    cursor: pointer; text-decoration: underline;
+    background: none; border: none; font-family: 'DM Sans', sans-serif;
+  }
+  .help-btn:hover { color: #922b21; }
+
+  /* MODAL */
+  .overlay {
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,.5); z-index: 100;
+    align-items: center; justify-content: center;
+  }
+  .overlay.open { display: flex; }
+  .mbox {
+    background: #fff; border-radius: 14px; padding: 28px 32px;
+    max-width: 400px; width: 90%; box-shadow: 0 16px 48px rgba(0,0,0,.3);
+  }
+  .mbox h2 { font-family: 'Playfair Display', serif; font-size: 19px; color: #c0392b; margin-bottom: 10px; }
+  .mbox p { font-size: 13px; color: #7a5a55; line-height: 1.65; }
+  .mclose {
+    margin-top: 18px; padding: 8px 24px;
+    background: #f0c060; border: 1.5px solid #d4a017;
+    border-radius: 5px; font-size: 13px; font-weight: 600;
+    cursor: pointer; font-family: 'DM Sans', sans-serif;
+  }
+  .mclose:hover { background: #d4a017; color: #fff; }
+
+  /* TOAST */
+  .toast {
+    position: fixed; bottom: 28px; left: 50%;
+    transform: translateX(-50%) translateY(60px);
+    background: #2c1a17; color: #fff; padding: 9px 22px;
+    border-radius: 22px; font-size: 13px; font-weight: 500;
+    transition: transform .3s; pointer-events: none; z-index: 200;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+</style>
+</head>
+<body>
+
+<div class="card">
+
+  <!-- HEADER -->
+  <div class="hdr">
+    <div class="logo">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 110 110">
+        <path d="M55,8 C35,8 19,24 19,44 C19,68 55,102 55,102 C55,102 91,68 91,44 C91,24 75,8 55,8 Z" fill="#c0392b"/>
+        <circle cx="55" cy="43" r="24" fill="#fff"/>
+        <polygon points="55,22 58.5,36 51.5,36" fill="#c0392b"/>
+        <polygon points="55,64 58.5,50 51.5,50" fill="#c0392b" opacity=".35"/>
+        <polygon points="76,43 62,39.5 62,46.5" fill="#f0c060"/>
+        <polygon points="34,43 48,39.5 48,46.5" fill="#f0c060" opacity=".6"/>
+        <circle cx="55" cy="43" r="18" fill="none" stroke="#c0392b" stroke-width=".7" stroke-dasharray="2 5" opacity=".5"/>
+        <circle cx="55" cy="43" r="5.5" fill="#c0392b"/>
+        <circle cx="55" cy="43" r="2.5" fill="#fff"/>
+        <ellipse cx="55" cy="105" rx="14" ry="4" fill="#2c1a17" opacity=".12"/>
+      </svg>
+    </div>
+    <div class="hdr-title">Cardiff Metropolitan University Navigation App</div>
+    <div class="hdr-right">
+      <div class="mode-box" id="mode-display">Student</div>
+      <div class="hdr-btns">
+        <button class="btn btn-g" onclick="openModal('about')">About Us</button>
+        <button class="btn btn-g" onclick="openModal('contact')">Contact Us</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOOLBAR -->
+  <div class="toolbar">
+    <div class="blk-label" id="blk-label">Block A</div>
+    <div class="arr-group">
+      <button class="arr" onclick="prevBlk()">&#9650;</button>
+      <button class="arr" onclick="nextBlk()">&#9660;</button>
+    </div>
+  </div>
+
+  <!-- MAP -->
+  <div class="map-area">
+    <div class="map-frame">
+      <div class="ftabs" id="ftabs"></div>
+      <svg id="map-svg" class="map-svg" viewBox="0 0 560 220" xmlns="http://www.w3.org/2000/svg"></svg>
+      <div class="tip-strip" id="tip">Hover over a room to see details</div>
+    </div>
+  </div>
+
+  <!-- LEGEND -->
+  <div class="legend">
+    <div class="leg"><div class="leg-sq" style="background:#fde8e5;border:1px solid #f0a89f"></div>Lecture/Seminar</div>
+    <div class="leg"><div class="leg-sq" style="background:#e8f0fc;border:1px solid #b5d4f4"></div>Lab/Studio</div>
+    <div class="leg"><div class="leg-sq" style="background:#e8f5e8;border:1px solid #9FE1CB"></div>Social/Cafe</div>
+    <div class="leg"><div class="leg-sq" style="background:#fff8e8;border:1px solid #fac775"></div>Reception</div>
+    <div class="leg"><div class="leg-sq" style="background:#f0f0f0;border:1px solid #ccc"></div>Facilities</div>
+    <div class="leg"><svg width="9" height="9" style="flex-shrink:0"><circle cx="4.5" cy="4.5" r="4" fill="#1D9E75"/></svg>Open</div>
+    <div class="leg"><svg width="9" height="9" style="flex-shrink:0"><circle cx="4.5" cy="4.5" r="4" fill="#EF9F27"/></svg>Busy</div>
+    <div class="leg"><svg width="9" height="9" style="flex-shrink:0"><circle cx="4.5" cy="4.5" r="4" fill="#E24B4A"/></svg>Closed</div>
+  </div>
+
+  <!-- INFO STRIP -->
+  <div class="info">
+    <div class="info-main">
+      <div class="info-name" id="i-name"></div>
+      <div class="info-desc" id="i-desc"></div>
+      <div class="info-tags" id="i-tags"></div>
+    </div>
+    <div class="info-hrs">
+      <strong>Opening Hours</strong>
+      <span id="i-hrs"></span>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <div class="footer">
+    <button class="help-btn" onclick="openModal('help')">Help</button>
+    <button class="btn btn-so" onclick="window.location.href='signout.html'">Sign Out</button>
+  </div>
+
+</div>
+
+<!-- MODAL -->
+<div class="overlay" id="modal" onclick="if(event.target.id==='modal')closeModal()">
+  <div class="mbox">
+    <h2 id="m-title"></h2>
+    <p  id="m-body"></p>
+    <button class="mclose" onclick="closeModal()">Close</button>
+  </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<script>
+/* ── DATA ── */
+var TYPE_FILL = { lecture:'#fde8e5', lab:'#e8f0fc', social:'#e8f5e8', reception:'#fff8e8', facility:'#f0f0f0' };
+var STATUS_COLOR = { open:'#1D9E75', busy:'#EF9F27', closed:'#E24B4A' };
+var STATUS_LABEL = { open:'Open', busy:'In use', closed:'Closed' };
+
+var BUILDINGS = [
+  { id:'A', label:'Block A', name:'Block A — Main Academic Building',
+    desc:'Central academic hub with lecture theatres, seminar rooms and the main reception.',
+    tags:['Lecture Theatres','Seminar Rooms','Reception','Accessible'], hours:'Mon-Fri 08:00-21:00',
+    floors:[
+      { label:'Ground', rooms:[
+        {id:'G01',name:'Main Reception',      type:'reception',status:'open',  x:14,y:18,w:110,h:55},
+        {id:'G02',name:'Lecture Theatre A1',  type:'lecture',  status:'busy',  x:136,y:18,w:160,h:80},
+        {id:'G03',name:'Seminar G03',         type:'lecture',  status:'open',  x:308,y:18,w:95,h:55},
+        {id:'G04',name:'Cafe / Canteen',      type:'social',   status:'open',  x:14,y:86,w:110,h:55},
+        {id:'G05',name:'Toilets',             type:'facility', status:'open',  x:415,y:18,w:65,h:38},
+        {id:'G06',name:'Seminar G04',         type:'lecture',  status:'closed',x:308,y:86,w:95,h:55},
+        {id:'G07',name:'Stairwell',           type:'facility', status:'open',  x:415,y:64,w:65,h:40}]},
+      { label:'Floor 1', rooms:[
+        {id:'101',name:'Lecture Theatre A2',  type:'lecture',  status:'busy',  x:14,y:18,w:150,h:80},
+        {id:'102',name:'Seminar 101',         type:'lecture',  status:'open',  x:178,y:18,w:100,h:55},
+        {id:'103',name:'Seminar 102',         type:'lecture',  status:'closed',x:178,y:86,w:100,h:55},
+        {id:'104',name:'Staff Offices',       type:'facility', status:'open',  x:292,y:18,w:110,h:123},
+        {id:'105',name:'IT Help Desk',        type:'lab',      status:'open',  x:416,y:18,w:65,h:55},
+        {id:'106',name:'Toilets',             type:'facility', status:'open',  x:416,y:86,w:65,h:55}]},
+      { label:'Floor 2', rooms:[
+        {id:'201',name:'Computer Lab 2A',     type:'lab',      status:'open',  x:14,y:18,w:140,h:85},
+        {id:'202',name:'Computer Lab 2B',     type:'lab',      status:'busy',  x:168,y:18,w:140,h:85},
+        {id:'203',name:'Seminar 201',         type:'lecture',  status:'open',  x:322,y:18,w:100,h:55},
+        {id:'204',name:'Student Lounge',      type:'social',   status:'open',  x:322,y:86,w:100,h:55},
+        {id:'205',name:'Research Office',     type:'facility', status:'open',  x:436,y:18,w:50,h:123}]}]},
+
+  { id:'B', label:'Block B', name:'Block B — Technology and Engineering',
+    desc:'Specialist computing labs, electronics workshops and maker spaces for Engineering and Computing students.',
+    tags:['Computer Labs','Engineering','Workshops','Wi-Fi'], hours:'Mon-Fri 08:00-20:00',
+    floors:[
+      { label:'Ground', rooms:[
+        {id:'BG1',name:'Engineering Workshop',type:'lab',      status:'open',  x:14,y:18,w:180,h:105},
+        {id:'BG2',name:'Electronics Lab',     type:'lab',      status:'busy',  x:208,y:18,w:130,h:105},
+        {id:'BG3',name:'Technician Office',   type:'facility', status:'open',  x:352,y:18,w:110,h:50},
+        {id:'BG4',name:'Project Store',       type:'facility', status:'open',  x:352,y:76,w:110,h:47},
+        {id:'BG5',name:'Toilets',             type:'facility', status:'open',  x:476,y:18,w:50,h:105}]},
+      { label:'Floor 1', rooms:[
+        {id:'B101',name:'Computer Lab B1',    type:'lab',      status:'open',  x:14,y:18,w:150,h:85},
+        {id:'B102',name:'Robotics Lab',       type:'lab',      status:'busy',  x:178,y:18,w:130,h:85},
+        {id:'B103',name:'3D Print Suite',     type:'lab',      status:'open',  x:322,y:18,w:90,h:85},
+        {id:'B104',name:'Seminar B101',       type:'lecture',  status:'closed',x:426,y:18,w:100,h:55},
+        {id:'B105',name:'Staff Office',       type:'facility', status:'open',  x:426,y:80,w:100,h:23}]},
+      { label:'Floor 2', rooms:[
+        {id:'B201',name:'AI Research Lab',    type:'lab',      status:'open',  x:14,y:18,w:165,h:95},
+        {id:'B202',name:'Cybersecurity Suite',type:'lab',      status:'open',  x:193,y:18,w:140,h:95},
+        {id:'B203',name:'Postgrad Lounge',    type:'social',   status:'open',  x:347,y:18,w:105,h:95},
+        {id:'B204',name:'Seminar B201',       type:'lecture',  status:'open',  x:466,y:18,w:70,h:95}]}]},
+
+  { id:'C', label:'Block C', name:'Block C — Arts and Design Centre',
+    desc:'Creative studios for Art, Design and Photography. Darkrooms, large-format printing and exhibition space at Llandaff Campus.',
+    tags:['Art Studios','Photography','Exhibition','Printing'], hours:'Mon-Sat 08:00-18:00',
+    floors:[
+      { label:'Ground', rooms:[
+        {id:'CG1',name:'Main Gallery',        type:'social',   status:'open',  x:14,y:18,w:200,h:112},
+        {id:'CG2',name:'Reception / Info',    type:'reception',status:'open',  x:228,y:18,w:110,h:52},
+        {id:'CG3',name:'Darkroom',            type:'lab',      status:'busy',  x:228,y:78,w:110,h:52},
+        {id:'CG4',name:'Print Studio',        type:'lab',      status:'open',  x:352,y:18,w:115,h:112},
+        {id:'CG5',name:'Equipment Store',     type:'facility', status:'open',  x:481,y:18,w:55,h:112}]},
+      { label:'Floor 1', rooms:[
+        {id:'C101',name:'Fine Art Studio 1A', type:'lab',      status:'busy',  x:14,y:18,w:170,h:105},
+        {id:'C102',name:'Fine Art Studio 1B', type:'lab',      status:'open',  x:198,y:18,w:140,h:105},
+        {id:'C103',name:'Critique Space',     type:'social',   status:'open',  x:352,y:18,w:105,h:65},
+        {id:'C104',name:'Staff Studios',      type:'facility', status:'open',  x:352,y:91,w:105,h:32},
+        {id:'C105',name:'Toilets',            type:'facility', status:'open',  x:471,y:18,w:65,h:105}]},
+      { label:'Floor 2', rooms:[
+        {id:'C201',name:'Photography Suite',  type:'lab',      status:'open',  x:14,y:18,w:160,h:105},
+        {id:'C202',name:'Digital Design Lab', type:'lab',      status:'busy',  x:188,y:18,w:155,h:105},
+        {id:'C203',name:'Seminar C201',       type:'lecture',  status:'closed',x:357,y:18,w:100,h:60},
+        {id:'C204',name:'MA Studio',          type:'lab',      status:'open',  x:357,y:86,w:100,h:37},
+        {id:'C205',name:'Archive Room',       type:'facility', status:'open',  x:471,y:18,w:65,h:105}]}]},
+
+  { id:'D', label:'Block D', name:'Block D — Business School',
+    desc:'Bloomberg terminals, case study rooms and enterprise spaces for Business and Management students.',
+    tags:['Bloomberg','Case Study','Enterprise Hub','Meetings'], hours:'Mon-Fri 08:00-20:00',
+    floors:[
+      { label:'Ground', rooms:[
+        {id:'DG1',name:'Business Atrium',     type:'social',   status:'open',  x:14,y:18,w:140,h:112},
+        {id:'DG2',name:'Bloomberg Suite',     type:'lab',      status:'open',  x:168,y:18,w:140,h:55},
+        {id:'DG3',name:'Enterprise Hub',      type:'social',   status:'open',  x:168,y:81,w:140,h:49},
+        {id:'DG4',name:'Lecture Theatre D1',  type:'lecture',  status:'busy',  x:322,y:18,w:145,h:112},
+        {id:'DG5',name:'Toilets',             type:'facility', status:'open',  x:481,y:18,w:55,h:112}]},
+      { label:'Floor 1', rooms:[
+        {id:'D101',name:'Seminar D101',       type:'lecture',  status:'open',  x:14,y:18,w:110,h:75},
+        {id:'D102',name:'Seminar D102',       type:'lecture',  status:'busy',  x:138,y:18,w:110,h:75},
+        {id:'D103',name:'Seminar D103',       type:'lecture',  status:'open',  x:262,y:18,w:110,h:75},
+        {id:'D104',name:'Staff Offices',      type:'facility', status:'open',  x:386,y:18,w:80,h:75},
+        {id:'D105',name:'Case Study Suite',   type:'lecture',  status:'closed',x:14,y:103,w:220,h:32}]},
+      { label:'Floor 2', rooms:[
+        {id:'D201',name:'Research Centre',    type:'facility', status:'open',  x:14,y:18,w:175,h:105},
+        {id:'D202',name:'Computer Lab D2',    type:'lab',      status:'open',  x:203,y:18,w:150,h:105},
+        {id:'D203',name:'Seminar D201',       type:'lecture',  status:'open',  x:367,y:18,w:100,h:58},
+        {id:'D204',name:'Seminar D202',       type:'lecture',  status:'open',  x:367,y:84,w:100,h:39},
+        {id:'D205',name:'Stairwell',          type:'facility', status:'open',  x:481,y:18,w:55,h:105}]},
+      { label:'Floor 3', rooms:[
+        {id:'D301',name:"Dean's Office",      type:'facility', status:'open',  x:14,y:18,w:130,h:75},
+        {id:'D302',name:'Conference Room',    type:'lecture',  status:'open',  x:158,y:18,w:160,h:75},
+        {id:'D303',name:'Exec Boardroom',     type:'lecture',  status:'closed',x:332,y:18,w:145,h:75},
+        {id:'D304',name:'Roof Terrace',       type:'social',   status:'open',  x:14,y:103,w:463,h:30}]}]},
+
+  { id:'E', label:'Block E', name:'Block E — Health and Sport Sciences',
+    desc:'Sport science labs, physiology suites, sports hall and elite athlete performance centre.',
+    tags:['Sport Labs','Physiology','Sports Hall','Performance'], hours:'Mon-Sun 07:00-22:00',
+    floors:[
+      { label:'Ground', rooms:[
+        {id:'EG1',name:'Main Sports Hall',    type:'lab',      status:'open',  x:14,y:18,w:222,h:122},
+        {id:'EG2',name:'Changing Rooms M',    type:'facility', status:'open',  x:250,y:18,w:110,h:58},
+        {id:'EG3',name:'Changing Rooms F',    type:'facility', status:'open',  x:250,y:82,w:110,h:58},
+        {id:'EG4',name:'Kit Store',           type:'facility', status:'open',  x:374,y:18,w:100,h:58},
+        {id:'EG5',name:'Reception',           type:'reception',status:'open',  x:374,y:82,w:100,h:58},
+        {id:'EG6',name:'Toilets',             type:'facility', status:'open',  x:488,y:18,w:48,h:122}]},
+      { label:'Floor 1', rooms:[
+        {id:'E101',name:'Physiology Lab',     type:'lab',      status:'busy',  x:14,y:18,w:155,h:95},
+        {id:'E102',name:'Sport Science Lab',  type:'lab',      status:'open',  x:183,y:18,w:155,h:95},
+        {id:'E103',name:'Fitness Suite',      type:'lab',      status:'open',  x:352,y:18,w:135,h:95},
+        {id:'E104',name:'Seminar E101',       type:'lecture',  status:'open',  x:501,y:18,w:45,h:95}]}]},
+
+  { id:'F', label:'Block F', name:'Block F — Library and Learning Resources',
+    desc:'200,000+ volumes, silent study zones, group study pods and 24-hour online resources.',
+    tags:['Library','Silent Zone','Study Pods','24hr Online'], hours:'Mon-Fri 08:00-midnight',
+    floors:[
+      { label:'Ground', rooms:[
+        {id:'FG1',name:'Main Library Floor',  type:'social',   status:'open',  x:14,y:18,w:242,h:122},
+        {id:'FG2',name:'Issue / Returns',     type:'reception',status:'open',  x:270,y:18,w:110,h:58},
+        {id:'FG3',name:'Self-Service Kiosks', type:'facility', status:'open',  x:270,y:82,w:110,h:58},
+        {id:'FG4',name:'Printing Station',    type:'facility', status:'open',  x:394,y:18,w:80,h:122},
+        {id:'FG5',name:'Toilets',             type:'facility', status:'open',  x:488,y:18,w:48,h:122}]},
+      { label:'Floor 1', rooms:[
+        {id:'F101',name:'Silent Study Zone',  type:'lecture',  status:'open',  x:14,y:18,w:200,h:122},
+        {id:'F102',name:'Group Study Pods x6',type:'social',   status:'busy',  x:228,y:18,w:135,h:122},
+        {id:'F103',name:'Digital Media Suite',type:'lab',      status:'open',  x:377,y:18,w:100,h:58},
+        {id:'F104',name:'Postgrad Study',     type:'lecture',  status:'open',  x:377,y:82,w:100,h:58},
+        {id:'F105',name:'Stairwell',          type:'facility', status:'open',  x:491,y:18,w:45,h:122}]},
+      { label:'Floor 2', rooms:[
+        {id:'F201',name:'Rare Books Room',    type:'facility', status:'closed',x:14,y:18,w:130,h:95},
+        {id:'F202',name:'Research Collections',type:'lecture', status:'open',  x:158,y:18,w:162,h:95},
+        {id:'F203',name:'Archive Collections',type:'facility', status:'open',  x:334,y:18,w:143,h:95},
+        {id:'F204',name:'24hr Study Lounge',  type:'social',   status:'open',  x:14,y:121,w:463,h:32},
+        {id:'F205',name:'Stairwell',          type:'facility', status:'open',  x:491,y:18,w:45,h:135}]}]},
+
+  { id:'H', label:'Block H', name:'Block H — Student Services Hub',
+    desc:"Students Union, welfare support, careers advice, international student office and mental health counselling.",
+    tags:["Students Union",'Welfare','Careers','International'], hours:'Mon-Fri 09:00-17:00',
+    floors:[
+      { label:'Ground', rooms:[
+        {id:'HG1',name:'Students Union',      type:'social',   status:'open',  x:14,y:18,w:162,h:112},
+        {id:'HG2',name:'Welfare Office',      type:'facility', status:'open',  x:190,y:18,w:120,h:53},
+        {id:'HG3',name:'International Office',type:'facility', status:'open',  x:190,y:79,w:120,h:51},
+        {id:'HG4',name:'Careers Centre',      type:'lecture',  status:'busy',  x:324,y:18,w:152,h:112},
+        {id:'HG5',name:'Toilets',             type:'facility', status:'open',  x:490,y:18,w:46,h:112}]},
+      { label:'Floor 1', rooms:[
+        {id:'H101',name:'Counselling Suite',  type:'facility', status:'open',  x:14,y:18,w:172,h:105},
+        {id:'H102',name:'Disability Support', type:'facility', status:'open',  x:200,y:18,w:140,h:105},
+        {id:'H103',name:'Finance and Fees',   type:'facility', status:'open',  x:354,y:18,w:112,h:57},
+        {id:'H104',name:'Meeting Rooms x3',   type:'lecture',  status:'open',  x:354,y:83,w:112,h:40},
+        {id:'H105',name:'Stairwell',          type:'facility', status:'open',  x:480,y:18,w:56,h:105}]}]},
+
+  { id:'M', label:'Block M', name:'Block M — Media and Communications',
+    desc:'Broadcast studios, podcast booths, TV production suite and editing suites for Media and Journalism students.',
+    tags:['Broadcast Studio','Podcast Booths','TV Suite','Editing'], hours:'Mon-Fri 09:00-19:00',
+    floors:[
+      { label:'Ground', rooms:[
+        {id:'MG1',name:'TV Production Studio',type:'lab',      status:'busy',  x:14,y:18,w:182,h:112},
+        {id:'MG2',name:'Green Screen Room',   type:'lab',      status:'open',  x:210,y:18,w:120,h:55},
+        {id:'MG3',name:'Podcast Booths x4',   type:'lab',      status:'open',  x:210,y:81,w:120,h:49},
+        {id:'MG4',name:'Equipment Store',     type:'facility', status:'open',  x:344,y:18,w:122,h:112},
+        {id:'MG5',name:'Reception',           type:'reception',status:'open',  x:480,y:18,w:56,h:112}]},
+      { label:'Floor 1', rooms:[
+        {id:'M101',name:'Editing Suites x8',  type:'lab',      status:'busy',  x:14,y:18,w:200,h:105},
+        {id:'M102',name:'Journalism Newsroom',type:'lab',      status:'open',  x:228,y:18,w:152,h:105},
+        {id:'M103',name:'Radio Studio',       type:'lab',      status:'open',  x:394,y:18,w:92,h:58},
+        {id:'M104',name:'Seminar M101',       type:'lecture',  status:'open',  x:394,y:84,w:92,h:39},
+        {id:'M105',name:'Stairwell',          type:'facility', status:'open',  x:500,y:18,w:36,h:105}]}]},
+
+  { id:'P', label:'Block P', name:'Block P — Postgraduate Centre',
+    desc:'PhD study carrels, research labs, seminar rooms and the Graduate School office for postgraduate researchers.',
+    tags:['PhD Studies','Research Labs','Graduate School','Seminars'], hours:'Mon-Fri 08:00-20:00',
+    floors:[
+      { label:'Ground', rooms:[
+        {id:'PG1',name:'PG Reception',        type:'reception',status:'open',  x:14,y:18,w:132,h:85},
+        {id:'PG2',name:'Graduate School',     type:'facility', status:'open',  x:160,y:18,w:152,h:85},
+        {id:'PG3',name:'Research Seminar',    type:'lecture',  status:'busy',  x:326,y:18,w:152,h:85},
+        {id:'PG4',name:'Toilets',             type:'facility', status:'open',  x:492,y:18,w:44,h:85}]},
+      { label:'Floor 1', rooms:[
+        {id:'P101',name:'PhD Carrels x16',    type:'lecture',  status:'open',  x:14,y:18,w:200,h:105},
+        {id:'P102',name:'Research Lab P1',    type:'lab',      status:'open',  x:228,y:18,w:142,h:105},
+        {id:'P103',name:'Supervisor Offices', type:'facility', status:'open',  x:384,y:18,w:100,h:62},
+        {id:'P104',name:'Quiet Room',         type:'social',   status:'open',  x:384,y:88,w:100,h:35},
+        {id:'P105',name:'Stairwell',          type:'facility', status:'open',  x:498,y:18,w:38,h:105}]},
+      { label:'Floor 2', rooms:[
+        {id:'P201',name:'Research Lab P2',    type:'lab',      status:'busy',  x:14,y:18,w:162,h:105},
+        {id:'P202',name:'PG Lounge',          type:'social',   status:'open',  x:190,y:18,w:142,h:105},
+        {id:'P203',name:'Viva Room',          type:'lecture',  status:'closed',x:346,y:18,w:132,h:62},
+        {id:'P204',name:'IT Cluster',         type:'lab',      status:'open',  x:346,y:88,w:132,h:35},
+        {id:'P205',name:'Stairwell',          type:'facility', status:'open',  x:492,y:18,w:44,h:105}]}]},
+
+  { id:'T', label:'Block T', name:'Block T — ATRiuM (City Centre Campus)',
+    desc:'City-centre campus hosting Cardiff School of Art and Design and Cardiff School of Management.',
+    tags:['City Centre','Art and Design','Management','Cardiff Central'], hours:'Mon-Fri 08:00-21:00',
+    floors:[
+      { label:'Ground', rooms:[
+        {id:'TG1',name:'ATRiuM Reception',    type:'reception',status:'open',  x:14,y:18,w:130,h:92},
+        {id:'TG2',name:'Gallery / Exhibition',type:'social',   status:'open',  x:158,y:18,w:182,h:92},
+        {id:'TG3',name:'Cafe Bar',            type:'social',   status:'open',  x:354,y:18,w:122,h:92},
+        {id:'TG4',name:'Toilets',             type:'facility', status:'open',  x:490,y:18,w:46,h:92}]},
+      { label:'Floor 1', rooms:[
+        {id:'T101',name:'Design Studio 1A',   type:'lab',      status:'busy',  x:14,y:18,w:182,h:105},
+        {id:'T102',name:'Design Studio 1B',   type:'lab',      status:'open',  x:210,y:18,w:152,h:105},
+        {id:'T103',name:'Mgmt Seminar',       type:'lecture',  status:'open',  x:376,y:18,w:110,h:58},
+        {id:'T104',name:'Staff Hub',          type:'facility', status:'open',  x:376,y:84,w:110,h:39},
+        {id:'T105',name:'Stairwell',          type:'facility', status:'open',  x:500,y:18,w:36,h:105}]},
+      { label:'Floor 2', rooms:[
+        {id:'T201',name:'Photography Suite',  type:'lab',      status:'open',  x:14,y:18,w:162,h:105},
+        {id:'T202',name:'Print and Making Lab',type:'lab',     status:'busy',  x:190,y:18,w:152,h:105},
+        {id:'T203',name:'Crit Space',         type:'social',   status:'open',  x:356,y:18,w:122,h:62},
+        {id:'T204',name:'Offices',            type:'facility', status:'open',  x:356,y:88,w:122,h:35},
+        {id:'T205',name:'Stairwell',          type:'facility', status:'open',  x:492,y:18,w:44,h:105}]}]}
+];
+
+var MODALS = {
+  about:   { title:'About Cardiff Met Navigator',     body:'Cardiff Metropolitan University Navigation App v1.0<br><br>Built by the SEN5002 Agile Development team to help students, staff and visitors navigate the Llandaff Campus with interactive floor plans and real-time room status.' },
+  contact: { title:'Contact Us',                      body:'Cardiff Metropolitan University<br>Llandaff Campus, Western Avenue<br>Cardiff, CF5 2YB<br><br><strong>Enquiries:</strong> +44 (0)29 2041 7000<br><strong>Email:</strong> enquiry@cardiffmet.ac.uk<br><strong>App support:</strong> navigation@cardiffmet.ac.uk' },
+  help:    { title:'Help and Navigation Guide',       body:'&#8226; Use &#9650; &#9660; arrows to cycle through all 10 blocks<br>&#8226; Hover over any room to see its details<br>&#8226; Use the floor tabs to switch between Ground, Floor 1, Floor 2 etc.<br>&#8226; Green dot = Open &nbsp; Amber = Busy &nbsp; Red = Closed<br><br><strong>Emergency:</strong> +44 (0)29 2041 7288 (Campus Security)' }
+};
+
+/* ── STATE ── */
+var curIdx   = 0;
+var curFloor = 0;
+
+/* ── DRAW FLOOR PLAN ── */
+function drawFloor(bldg, fi) {
+  var floor = bldg.floors[fi];
+  var rooms = floor.rooms;
+  var svg   = document.getElementById('map-svg');
+  var VW = 560, VH = 220;
+  var rawW = 0, rawH = 0;
+  for (var i = 0; i < rooms.length; i++) {
+    rawW = Math.max(rawW, rooms[i].x + rooms[i].w);
+    rawH = Math.max(rawH, rooms[i].y + rooms[i].h);
+  }
+  rawW += 14; rawH += 14;
+  var scX = (VW - 6) / rawW;
+  var scY = (VH - 6) / rawH;
+  var sc  = Math.min(scX, scY);
+  var oX  = (VW - rawW * sc) / 2;
+  var oY  = (VH - rawH * sc) / 2;
+  var accent = bldg.id==='E'?'#185FA5':bldg.id==='F'?'#534AB7':bldg.id==='H'?'#0F6E56':'#c0392b';
+
+  var html = '<rect width="' + VW + '" height="' + VH + '" fill="#f8f4f2"/>';
+  html += '<rect x="0" y="0" width="' + VW + '" height="18" fill="' + accent + '22"/>';
+  html += '<text x="' + (VW/2) + '" y="12" font-family="Playfair Display,serif" font-size="8.5" font-weight="700" fill="' + accent + '" text-anchor="middle">' + bldg.name + ' — ' + floor.label + '</text>';
+
+  var minRX = 9999, minRY = 9999;
+  for (var i = 0; i < rooms.length; i++) { minRX = Math.min(minRX, rooms[i].x); minRY = Math.min(minRY, rooms[i].y); }
+  var bx = (oX + minRX * sc).toFixed(1);
+  var by = (oY + minRY * sc).toFixed(1);
+  var bw = ((rawW - 14) * sc).toFixed(1);
+  var bh = ((rawH - 14) * sc).toFixed(1);
+  html += '<rect x="' + bx + '" y="' + by + '" width="' + bw + '" height="' + bh + '" fill="none" stroke="' + accent + '" stroke-width="1.2" rx="3"/>';
+
+  for (var i = 0; i < rooms.length; i++) {
+    var r  = rooms[i];
+    var rx = (oX + r.x * sc).toFixed(1);
+    var ry = (oY + r.y * sc).toFixed(1);
+    var rw = (r.w * sc).toFixed(1);
+    var rh = (r.h * sc).toFixed(1);
+    var cx = (oX + (r.x + r.w / 2) * sc).toFixed(1);
+    var cy = (oY + (r.y + r.h / 2) * sc).toFixed(1);
+    var fill = TYPE_FILL[r.type] || '#f5f5f5';
+    var dc   = STATUS_COLOR[r.status];
+    var dr   = Math.max(3, Math.min(5, r.w * sc * 0.065));
+    var dx   = (oX + (r.x + r.w) * sc - dr - 2).toFixed(1);
+    var dy   = (oY + r.y * sc + dr + 2).toFixed(1);
+    var fs   = Math.max(6.5, Math.min(9.5, r.w * sc * 0.13));
+    var lbl  = r.name.length > 17 ? r.name.slice(0,16) + '...' : r.name;
+    var tipTxt = r.name + ' [' + r.id + '] — ' + STATUS_LABEL[r.status];
+    tipTxt = tipTxt.replace(/'/g, '&apos;').replace(/"/g, '&quot;');
+    html += '<g style="cursor:pointer" onmouseenter="setTip(\'' + tipTxt.replace(/'/g,"\\'") + '\')" onmouseleave="setTip(\'\')">';
+    html += '<rect x="' + rx + '" y="' + ry + '" width="' + rw + '" height="' + rh + '" fill="' + fill + '" stroke="#c8b4b0" stroke-width="0.7" rx="2"/>';
+    html += '<circle cx="' + dx + '" cy="' + dy + '" r="' + dr.toFixed(1) + '" fill="' + dc + '"/>';
+    html += '<text x="' + cx + '" y="' + (+cy - fs*0.35).toFixed(1) + '" font-family="DM Sans,sans-serif" font-size="' + fs.toFixed(1) + '" font-weight="600" fill="#2c1a17" text-anchor="middle">' + r.id + '</text>';
+    html += '<text x="' + cx + '" y="' + (+cy + fs*0.85).toFixed(1) + '" font-family="DM Sans,sans-serif" font-size="' + (fs*0.82).toFixed(1) + '" fill="#7a5a55" text-anchor="middle">' + lbl + '</text>';
+    html += '</g>';
+  }
+  html += '<text x="6" y="218" font-family="DM Sans,sans-serif" font-size="7.5" fill="#b07a74">' + floor.label + '</text>';
+  svg.innerHTML = html;
+}
+
+/* ── RENDER BLOCK ── */
+function render(idx, anim) {
+  if (anim === undefined) anim = true;
+  curIdx   = idx;
+  curFloor = 0;
+  var b = BUILDINGS[idx];
+  document.getElementById('blk-label').textContent = b.label;
+  document.getElementById('i-name').textContent    = b.name;
+  document.getElementById('i-desc').textContent    = b.desc;
+  document.getElementById('i-hrs').textContent     = b.hours;
+  var tagsEl = document.getElementById('i-tags');
+  tagsEl.innerHTML = '';
+  for (var i = 0; i < b.tags.length; i++) {
+    var sp = document.createElement('span');
+    sp.className = 'tag';
+    sp.textContent = b.tags[i];
+    tagsEl.appendChild(sp);
+  }
+  var tabEl = document.getElementById('ftabs');
+  if (b.floors.length > 1) {
+    tabEl.style.display = 'flex';
+    var tabHTML = '';
+    for (var i = 0; i < b.floors.length; i++) {
+      tabHTML += '<button class="ftab' + (i===0?' active':'') + '" id="ft'+i+'" onclick="switchFloor('+i+')">' + b.floors[i].label + '</button>';
+    }
+    tabEl.innerHTML = tabHTML;
+  } else {
+    tabEl.style.display = 'none';
+  }
+  var svg = document.getElementById('map-svg');
+  if (anim) {
+    svg.classList.add('fading');
+    setTimeout(function() { drawFloor(b, 0); svg.classList.remove('fading'); }, 280);
+  } else {
+    drawFloor(b, 0);
+  }
+  setTip('Hover over a room to see details');
+}
+
+/* ── SWITCH FLOOR ── */
+function switchFloor(fi) {
+  curFloor = fi;
+  var b = BUILDINGS[curIdx];
+  for (var i = 0; i < b.floors.length; i++) {
+    var t = document.getElementById('ft' + i);
+    if (t) t.className = 'ftab' + (i === fi ? ' active' : '');
+  }
+  var svg = document.getElementById('map-svg');
+  svg.classList.add('fading');
+  setTimeout(function() { drawFloor(b, fi); svg.classList.remove('fading'); }, 250);
+  setTip('Hover over a room to see details');
+}
+
+/* ── NAV ── */
+function nextBlk() { render((curIdx + 1) % BUILDINGS.length); }
+function prevBlk() { render((curIdx - 1 + BUILDINGS.length) % BUILDINGS.length); }
+
+/* ── TOOLTIP ── */
+function setTip(t) { document.getElementById('tip').textContent = t || 'Hover over a room to see details'; }
+
+/* ── MODAL ── */
+function openModal(key) {
+  var m = MODALS[key];
+  if (!m) return;
+  document.getElementById('m-title').textContent = m.title;
+  document.getElementById('m-body').innerHTML    = m.body;
+  document.getElementById('modal').classList.add('open');
+}
+function closeModal() { document.getElementById('modal').classList.remove('open'); }
+document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
+
+/* ── TOAST ── */
+var _tt;
+function showToast(msg) {
+  var t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  clearTimeout(_tt); _tt = setTimeout(function() { t.classList.remove('show'); }, 2800);
+}
+
+/* ── INIT ── */
+window.addEventListener('DOMContentLoaded', function() {
+  var mode = 'Guest';
+  try { mode = sessionStorage.getItem('userMode') || 'Guest'; } catch(e) {}
+  document.getElementById('mode-display').textContent = mode;
+  var startIdx = 0;
+  for (var i = 0; i < BUILDINGS.length; i++) { if (BUILDINGS[i].id === 'C') { startIdx = i; break; } }
+  render(startIdx, false);
+  showToast('Welcome! Signed in as ' + mode);
+});
+</script>
+</body>
+</html>
