@@ -131,3 +131,5 @@ Open `css/variables.css` and edit the `:root` block:
 - JS files: `camelCase.js`
 - HTML pages: `lowercase.html`
 - Data files: `lowercase.js` inside `js/data/`
+
+- 
