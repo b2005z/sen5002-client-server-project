@@ -126,7 +126,8 @@ Open `css/variables.css` and edit the `:root` block:
 ---
 
 ## FILE NAMING CONVENTIONS
-
+## Branch: feature/docker
+This branch contains the Docker configuration for the Cardiff Met Navigator.
 - CSS files: `lowercase-with-hyphens.css`
 - JS files: `camelCase.js`
 - HTML pages: `lowercase.html`
