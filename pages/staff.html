@@ -6,96 +6,55 @@
 <title>Staff Login — Cardiff Met Navigator</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: radial-gradient(ellipse at 40% 60%, #3a1a15, #1a0f0d);
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .card {
-    width: 320px;
-    background: #f9cdc8;
-    border-radius: 28px;
-    padding: 32px 28px 28px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    position: relative;
-    box-shadow: 0 20px 60px rgba(0,0,0,.5);
-    animation: up .4s ease;
-  }
-  @keyframes up { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
-  .badge {
-    position: absolute; top: 16px; right: 18px;
-    background: #fff; border: 1.5px solid #d4a017;
-    border-radius: 5px; padding: 5px 14px;
-    font-size: 12px; font-weight: 600; color: #c0392b;
-  }
-  .logo-wrap { width: 90px; height: 90px; margin-top: 18px; }
-  .logo-wrap svg { width: 100%; height: 100%; }
-  .app-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 15px; color: #c0392b;
-    text-align: center; line-height: 1.35; margin-top: 12px;
-  }
-  .gold-rule { width: 60px; height: 2px; background: #f0c060; border-radius: 1px; margin: 8px auto 0; }
-  .form { width: 100%; margin-top: 18px; display: flex; flex-direction: column; }
-  .input-field {
-    width: 100%; padding: 11px 14px; margin-top: 10px;
-    border: 1.5px solid #c0392b; border-radius: 5px;
-    background: #fff; font-family: 'DM Sans', sans-serif;
-    font-size: 14px; color: #2c1a17; outline: none;
-  }
-  .input-field:focus { border-color: #922b21; }
-  .input-field::placeholder { color: #b07a74; }
-  .err { font-size: 11px; color: #922b21; margin-top: 5px; display: none; }
-  .btn-row { display: flex; justify-content: center; margin-top: 14px; }
-  .btn-submit {
-    padding: 11px 44px; background: #f0c060;
-    border: 1.5px solid #d4a017; border-radius: 5px;
-    font-family: 'DM Sans', sans-serif; font-size: 15px;
-    font-weight: 600; color: #2c1a17; cursor: pointer; transition: all .18s;
-  }
-  .btn-submit:hover { background: #d4a017; color: #fff; }
-  .btn-link {
-    margin-top: 10px; padding: 8px 16px;
-    background: #f0c060; border: 1.5px solid #d4a017;
-    border-radius: 5px; font-family: 'DM Sans', sans-serif;
-    font-size: 12px; font-weight: 500; color: #2c1a17;
-    cursor: pointer; transition: all .18s; align-self: flex-start;
-  }
-  .btn-link:hover { background: #d4a017; color: #fff; }
-  .back-row { width: 100%; display: flex; justify-content: center; margin-top: 16px; }
-  .overlay {
-    display: none; position: fixed; inset: 0;
-    background: rgba(0,0,0,.5); z-index: 100;
-    align-items: center; justify-content: center;
-  }
-  .overlay.open { display: flex; }
-  .mbox {
-    background: #fff; border-radius: 14px;
-    padding: 26px 30px; max-width: 360px; width: 90%;
-    box-shadow: 0 16px 48px rgba(0,0,0,.3);
-  }
-  .mbox h2 { font-family: 'Playfair Display', serif; font-size: 18px; color: #c0392b; margin-bottom: 10px; }
-  .mbox p { font-size: 13px; color: #7a5a55; line-height: 1.65; }
-  .mclose {
-    margin-top: 16px; padding: 8px 24px;
-    background: #f0c060; border: 1.5px solid #d4a017;
-    border-radius: 5px; font-size: 13px; font-weight: 600;
-    cursor: pointer; font-family: 'DM Sans', sans-serif;
-  }
-  .mclose:hover { background: #d4a017; color: #fff; }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'DM Sans',sans-serif;background:radial-gradient(ellipse at 40% 60%,#3a1a15,#1a0f0d);min-height:100vh;display:flex;align-items:center;justify-content:center}
+  .card{width:320px;background:#f9cdc8;border-radius:28px;padding:32px 28px 28px;display:flex;flex-direction:column;align-items:center;position:relative;box-shadow:0 20px 60px rgba(0,0,0,.5);animation:up .4s ease}
+  @keyframes up{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+  .badge{position:absolute;top:16px;right:18px;background:#fff;border:1.5px solid #d4a017;border-radius:5px;padding:5px 14px;font-size:12px;font-weight:600;color:#c0392b}
+  .logo-wrap{width:90px;height:90px;margin-top:18px}.logo-wrap svg{width:100%;height:100%}
+  .app-title{font-family:'Playfair Display',serif;font-size:15px;color:#c0392b;text-align:center;line-height:1.35;margin-top:12px}
+  .gold-rule{width:60px;height:2px;background:#f0c060;border-radius:1px;margin:8px auto 0}
+  .form{width:100%;margin-top:18px;display:flex;flex-direction:column}
+  .input-wrap{position:relative;margin-top:10px}
+  .input-field{width:100%;padding:11px 36px 11px 14px;border:1.5px solid #c0392b;border-radius:5px;background:#fff;font-family:'DM Sans',sans-serif;font-size:14px;color:#2c1a17;outline:none;transition:border-color .2s,box-shadow .2s}
+  .input-field:focus{border-color:#922b21;box-shadow:0 0 0 3px rgba(192,57,43,.12)}
+  .input-field::placeholder{color:#b07a74}
+  .input-field.valid{border-color:#1D9E75;background:#f0fff8}
+  .input-field.invalid{border-color:#E24B4A;background:#fff5f5}
+  .input-icon{position:absolute;right:11px;top:50%;transform:translateY(-50%);font-size:13px;pointer-events:none;opacity:0;transition:opacity .2s}
+  .input-icon.show{opacity:1}
+  .strength-bar{height:3px;border-radius:2px;margin-top:5px;background:#e0d0cc;overflow:hidden;display:none}
+  .strength-fill{height:100%;border-radius:2px;width:0%;transition:width .3s,background .3s}
+  .strength-label{font-size:10px;color:#7a5a55;margin-top:2px;display:none}
+  .err-box{background:#fff0f0;border:1px solid #f0a89f;border-radius:5px;padding:8px 12px;margin-top:8px;display:none;font-size:11px;color:#922b21;line-height:1.4}
+  .err-box.show{display:block}
+  .hint{font-size:10px;color:#7a5a55;margin-top:4px;padding-left:2px}
+  .btn-row{display:flex;justify-content:center;margin-top:14px}
+  .btn-submit{padding:11px 44px;background:#f0c060;border:1.5px solid #d4a017;border-radius:5px;font-family:'DM Sans',sans-serif;font-size:15px;font-weight:600;color:#2c1a17;cursor:pointer;transition:all .18s}
+  .btn-submit:hover{background:#d4a017;color:#fff}
+  .btn-submit:disabled{background:#e0d0cc;border-color:#ccc;color:#aaa;cursor:not-allowed}
+  .spinner{display:none;width:14px;height:14px;border:2px solid #fff;border-top-color:transparent;border-radius:50%;animation:spin .6s linear infinite;margin:0 auto}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  .btn-link{margin-top:10px;padding:8px 16px;background:#f0c060;border:1.5px solid #d4a017;border-radius:5px;font-family:'DM Sans',sans-serif;font-size:12px;font-weight:500;color:#2c1a17;cursor:pointer;transition:all .18s;align-self:flex-start}
+  .btn-link:hover{background:#d4a017;color:#fff}
+  .back-row{width:100%;display:flex;justify-content:center;margin-top:16px}
+  .demo-box{width:100%;background:#fff8e8;border:1px solid #f0c060;border-radius:6px;padding:8px 12px;margin-top:12px}
+  .demo-box p{font-size:10px;color:#7a5a55;line-height:1.6}.demo-box strong{color:#c0392b}
+  .demo-row{display:flex;gap:6px;margin-top:6px;flex-wrap:wrap}
+  .demo-btn{padding:4px 10px;background:#fff;border:1px solid #d4a017;border-radius:4px;font-size:10px;font-weight:600;color:#2c1a17;cursor:pointer;transition:all .15s}
+  .demo-btn:hover{background:#f0c060}
+  .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:100;align-items:center;justify-content:center}
+  .overlay.open{display:flex}
+  .mbox{background:#fff;border-radius:14px;padding:26px 30px;max-width:360px;width:90%;box-shadow:0 16px 48px rgba(0,0,0,.3)}
+  .mbox h2{font-family:'Playfair Display',serif;font-size:18px;color:#c0392b;margin-bottom:10px}
+  .mbox p{font-size:13px;color:#7a5a55;line-height:1.65}
+  .mclose{margin-top:16px;padding:8px 24px;background:#f0c060;border:1.5px solid #d4a017;border-radius:5px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif}
+  .mclose:hover{background:#d4a017;color:#fff}
 </style>
 </head>
 <body>
-
 <div class="card">
   <div class="badge">Staff</div>
-
   <div class="logo-wrap">
     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 110 110">
       <path d="M55,8 C35,8 19,24 19,44 C19,68 55,102 55,102 C55,102 91,68 91,44 C91,24 75,8 55,8 Z" fill="#c0392b"/>
@@ -105,63 +64,97 @@
       <polygon points="76,43 62,39.5 62,46.5" fill="#f0c060"/>
       <polygon points="34,43 48,39.5 48,46.5" fill="#f0c060" opacity=".6"/>
       <circle cx="55" cy="43" r="18" fill="none" stroke="#c0392b" stroke-width=".7" stroke-dasharray="2 5" opacity=".5"/>
-      <circle cx="55" cy="43" r="5.5" fill="#c0392b"/>
-      <circle cx="55" cy="43" r="2.5" fill="#fff"/>
+      <circle cx="55" cy="43" r="5.5" fill="#c0392b"/><circle cx="55" cy="43" r="2.5" fill="#fff"/>
       <ellipse cx="55" cy="105" rx="14" ry="4" fill="#2c1a17" opacity=".12"/>
     </svg>
   </div>
-
   <div class="app-title">Cardiff Metropolitan University<br>Navigation App</div>
   <div class="gold-rule"></div>
-
   <div class="form">
-    <input class="input-field" type="email" id="email" placeholder="Staff Email" autocomplete="email">
-    <input class="input-field" type="password" id="pass" placeholder="••••••••••" autocomplete="current-password">
-    <span class="err" id="err">Please enter your email and password.</span>
+    <div class="input-wrap">
+      <input class="input-field" type="email" id="email" placeholder="Staff Email (e.g. jsmith@cardiffmet.ac.uk)" autocomplete="email" oninput="validateEmail()" onblur="validateEmailStrict()">
+      <span class="input-icon" id="email-icon"></span>
+    </div>
+    <div class="hint" id="email-hint">Use your Cardiff Met staff email ending in @cardiffmet.ac.uk</div>
+    <div class="input-wrap" style="margin-top:10px">
+      <input class="input-field" type="password" id="pass" placeholder="Password (min. 8 characters)" autocomplete="current-password" oninput="validatePassword()">
+      <span class="input-icon" id="pass-icon"></span>
+    </div>
+    <div class="strength-bar" id="strength-bar"><div class="strength-fill" id="strength-fill"></div></div>
+    <div class="strength-label" id="strength-label"></div>
+    <div class="err-box" id="err-box"></div>
     <div class="btn-row">
-      <button class="btn-submit" onclick="doLogin()">Submit</button>
+      <button class="btn-submit" id="submit-btn" onclick="doLogin()">
+        <span id="btn-text">Sign In</span>
+        <div class="spinner" id="spinner"></div>
+      </button>
     </div>
     <button class="btn-link" onclick="document.getElementById('fmod').classList.add('open')">Forgot Password</button>
+    <div class="demo-box">
+      <p><strong>Demo staff accounts</strong> — click to fill in:</p>
+      <div class="demo-row">
+        <button class="demo-btn" onclick="fillDemo('jsmith@cardiffmet.ac.uk','StaffPass2024!')">Dr. Smith</button>
+        <button class="demo-btn" onclick="fillDemo('hkahtan@cardiffmet.ac.uk','Module@Lead24')">H. Kahtan</button>
+      </div>
+    </div>
   </div>
-
   <div class="back-row">
     <button class="btn-link" onclick="window.location.href='welcome.html'">&#8592; Back</button>
   </div>
 </div>
-
 <div class="overlay" id="fmod" onclick="if(event.target.id==='fmod')document.getElementById('fmod').classList.remove('open')">
   <div class="mbox">
     <h2>Forgot Password</h2>
     <p>Contact IT Services to reset your Cardiff Met staff password.<br><br>
-    <strong>Email:</strong> itservices@cardiffmet.ac.uk<br>
-    <strong>Phone:</strong> +44 (0)29 2041 7000<br><br>
+    <strong>Email:</strong> itservices@cardiffmet.ac.uk<br><strong>Phone:</strong> +44 (0)29 2041 7000<br><br>
     Or visit the IT Help Desk in Block A, Ground Floor.</p>
     <button class="mclose" onclick="document.getElementById('fmod').classList.remove('open')">Close</button>
   </div>
 </div>
-
 <script>
-  function doLogin() {
-    var email = document.getElementById('email').value.trim();
-    var pass  = document.getElementById('pass').value.trim();
-    var err   = document.getElementById('err');
-    if (!email || !pass) {
-      err.textContent = 'Please enter your email and password.';
-      err.style.display = 'block';
-      return;
-    }
-    if (!email.includes('@')) {
-      err.textContent = 'Please enter a valid email address.';
-      err.style.display = 'block';
-      return;
-    }
-    err.style.display = 'none';
-    sessionStorage.setItem('userMode', 'Staff');
-    window.location.href = 'building.html';
-  }
-  document.addEventListener('keydown', function(e) {
-    if (e.key === 'Enter') doLogin();
-  });
+var VALID_DOMAINS=['cardiffmet.ac.uk','outlook.cardiffmet.ac.uk'];
+var DEMO_ACCOUNTS={'jsmith@cardiffmet.ac.uk':'StaffPass2024!','hkahtan@cardiffmet.ac.uk':'Module@Lead24','admin@cardiffmet.ac.uk':'Admin@2024'};
+function fillDemo(e,p){document.getElementById('email').value=e;document.getElementById('pass').value=p;validateEmail();validateEmailStrict();validatePassword();}
+function clearErr(){document.getElementById('err-box').classList.remove('show');}
+function showErr(m){document.getElementById('err-box').innerHTML=m;document.getElementById('err-box').classList.add('show');}
+function validateEmail(){
+  var val=document.getElementById('email').value.trim(),f=document.getElementById('email'),ic=document.getElementById('email-icon'),h=document.getElementById('email-hint');clearErr();
+  if(!val){f.className='input-field';ic.className='input-icon';return;}
+  var atIdx=val.indexOf('@');
+  if(atIdx<1){f.className='input-field invalid';ic.textContent='✗';ic.style.color='#E24B4A';ic.className='input-icon show';h.style.color='#E24B4A';return;}
+  var domain=val.slice(atIdx+1).toLowerCase(),ok=VALID_DOMAINS.some(function(d){return domain===d||domain.endsWith('.'+d);});
+  if(!ok&&domain.length>2){f.className='input-field invalid';ic.textContent='✗';ic.style.color='#E24B4A';ic.className='input-icon show';h.textContent='Must end in @cardiffmet.ac.uk';h.style.color='#E24B4A';return;}
+  if(ok){f.className='input-field valid';ic.textContent='✓';ic.style.color='#1D9E75';ic.className='input-icon show';h.textContent='Cardiff Met email recognised ✓';h.style.color='#1D9E75';}
+}
+function validateEmailStrict(){var val=document.getElementById('email').value.trim();if(!val)return;if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val)){document.getElementById('email').className='input-field invalid';document.getElementById('email-icon').textContent='✗';document.getElementById('email-icon').style.color='#E24B4A';document.getElementById('email-icon').className='input-icon show';}}
+function validatePassword(){
+  var val=document.getElementById('pass').value,f=document.getElementById('pass'),ic=document.getElementById('pass-icon'),bar=document.getElementById('strength-bar'),fill=document.getElementById('strength-fill'),lbl=document.getElementById('strength-label');clearErr();
+  if(!val){f.className='input-field';ic.className='input-icon';bar.style.display='none';lbl.style.display='none';return;}
+  bar.style.display='block';lbl.style.display='block';
+  var score=0;if(val.length>=8)score++;if(val.length>=12)score++;if(/[A-Z]/.test(val))score++;if(/[0-9]/.test(val))score++;if(/[^A-Za-z0-9]/.test(val))score++;
+  var pcts=['0%','30%','50%','70%','90%','100%'],cols=['#E24B4A','#E24B4A','#EF9F27','#EF9F27','#1D9E75','#1D9E75'],lbls=['Too short','Weak','Fair','Good','Strong','Very strong'];
+  fill.style.width=pcts[score];fill.style.background=cols[score];lbl.textContent=lbls[score];lbl.style.color=cols[score];
+  if(val.length<8){f.className='input-field invalid';ic.textContent='✗';ic.style.color='#E24B4A';ic.className='input-icon show';}
+  else{f.className='input-field valid';ic.textContent='✓';ic.style.color='#1D9E75';ic.className='input-icon show';}
+}
+function doLogin(){
+  clearErr();
+  var email=document.getElementById('email').value.trim(),pass=document.getElementById('pass').value;
+  if(!email&&!pass){showErr('Please enter your email address and password.');return;}
+  if(!email){showErr('Please enter your email address.');return;}
+  if(!pass){showErr('Please enter your password.');return;}
+  if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)){showErr('That does not look like a valid email address.');return;}
+  var domain=email.split('@')[1].toLowerCase(),ok=VALID_DOMAINS.some(function(d){return domain===d||domain.endsWith('.'+d);});
+  if(!ok){showErr('Please use your Cardiff Met staff email ending in <strong>@cardiffmet.ac.uk</strong>.');return;}
+  if(pass.length<8){showErr('Password must be at least 8 characters long.');return;}
+  var stored=DEMO_ACCOUNTS[email.toLowerCase()];
+  if(stored!==undefined&&stored!==pass){showErr('Incorrect password. Please try again or use <strong>Forgot Password</strong>.');return;}
+  var btn=document.getElementById('submit-btn');btn.disabled=true;
+  document.getElementById('btn-text').style.display='none';document.getElementById('spinner').style.display='block';
+  sessionStorage.setItem('userMode','Staff');sessionStorage.setItem('userEmail',email);
+  setTimeout(function(){window.location.href='building.html';},800);
+}
+document.addEventListener('keydown',function(e){if(e.key==='Enter')doLogin();});
 </script>
 </body>
 </html>

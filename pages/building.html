@@ -6,151 +6,160 @@
 <title>Campus Map — Cardiff Met Navigator</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-  body {
-    font-family: 'DM Sans', sans-serif;
-    background: radial-gradient(ellipse at 50% 30%, #3a1a15, #1a0f0d);
-    min-height: 100vh;
-    display: flex; align-items: center; justify-content: center; padding: 20px;
-  }
-  .card {
-    width: 860px; background: #f9cdc8; border-radius: 14px;
-    overflow: hidden; box-shadow: 0 24px 64px rgba(0,0,0,.45);
-    animation: up .4s ease;
-  }
-  @keyframes up { from { opacity:0; transform:translateY(18px); } to { opacity:1; transform:translateY(0); } }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'DM Sans',sans-serif;background:radial-gradient(ellipse at 50% 30%,#3a1a15,#1a0f0d);min-height:100vh;display:flex;align-items:center;justify-content:center;padding:20px}
+  .card{width:860px;background:#f9cdc8;border-radius:14px;overflow:hidden;box-shadow:0 24px 64px rgba(0,0,0,.45);animation:up .4s ease}
+  @keyframes up{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
 
-  /* HEADER */
-  .hdr {
-    background: #f9cdc8; border-bottom: 1.5px solid #f0a89f;
-    padding: 12px 18px; display: flex; align-items: center; gap: 14px;
-  }
-  .logo { width: 68px; height: 68px; flex-shrink: 0; }
-  .logo svg { width: 100%; height: 100%; }
-  .hdr-title {
-    font-family: 'Playfair Display', serif;
-    font-size: 17px; color: #c0392b; flex: 1;
-  }
-  .hdr-right { display: flex; flex-direction: column; align-items: flex-end; gap: 8px; }
-  .mode-box {
-    background: #fff; border: 1.5px solid #d4a017; border-radius: 5px;
-    padding: 5px 16px; font-size: 13px; font-weight: 600;
-    color: #c0392b; min-width: 110px; text-align: center;
-  }
-  .hdr-btns { display: flex; gap: 8px; }
-  .btn {
-    font-family: 'DM Sans', sans-serif; font-size: 13px; font-weight: 600;
-    cursor: pointer; border-radius: 5px; transition: all .18s;
-  }
-  .btn-g { background: #f0c060; border: 1.5px solid #d4a017; color: #2c1a17; padding: 8px 18px; }
-  .btn-g:hover { background: #d4a017; color: #fff; }
-  .btn-so { background: #f0c060; border: 1.5px solid #d4a017; color: #2c1a17; padding: 7px 16px; }
-  .btn-so:hover { background: #c0392b; color: #fff; }
+  /* ── HEADER ── */
+  .hdr{background:#f9cdc8;border-bottom:1.5px solid #f0a89f;padding:12px 18px;display:flex;align-items:center;gap:14px}
+  .logo{width:68px;height:68px;flex-shrink:0}.logo svg{width:100%;height:100%}
+  .hdr-title{font-family:'Playfair Display',serif;font-size:17px;color:#c0392b;flex:1}
+  .hdr-right{display:flex;flex-direction:column;align-items:flex-end;gap:8px}
+  .mode-box{background:#fff;border:1.5px solid #d4a017;border-radius:5px;padding:5px 16px;font-size:13px;font-weight:600;color:#c0392b;min-width:110px;text-align:center}
+  .hdr-btns{display:flex;gap:8px}
+  .btn{font-family:'DM Sans',sans-serif;font-size:13px;font-weight:600;cursor:pointer;border-radius:5px;transition:all .18s}
+  .btn-g{background:#f0c060;border:1.5px solid #d4a017;color:#2c1a17;padding:8px 18px}
+  .btn-g:hover{background:#d4a017;color:#fff}
+  .btn-so{background:#f0c060;border:1.5px solid #d4a017;color:#2c1a17;padding:7px 16px}
+  .btn-so:hover{background:#c0392b;color:#fff}
 
-  /* TOOLBAR */
-  .toolbar {
-    padding: 10px 18px; display: flex; align-items: center;
-    justify-content: space-between; border-bottom: 1px solid #f0a89f;
-  }
-  .blk-label {
-    background: #fff; border: 1.5px solid #c0392b; border-radius: 5px;
-    padding: 7px 22px; font-size: 14px; font-weight: 600;
-    color: #c0392b; min-width: 150px;
-  }
-  .arr-group { display: flex; }
-  .arr {
-    width: 44px; height: 40px; background: #7a8fa0; border: none;
-    color: #fff; font-size: 15px; cursor: pointer;
-    display: flex; align-items: center; justify-content: center; transition: background .18s;
-  }
-  .arr:hover { background: #4e6878; }
-  .arr:first-child { border-radius: 6px 0 0 6px; }
-  .arr:last-child  { border-radius: 0 6px 6px 0; }
+  /* ── TOOLBAR ── */
+  .toolbar{padding:10px 18px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid #f0a89f}
+  .blk-label{background:#fff;border:1.5px solid #c0392b;border-radius:5px;padding:7px 22px;font-size:14px;font-weight:600;color:#c0392b;min-width:150px}
+  .arr-group{display:flex}
+  .arr{width:44px;height:40px;background:#7a8fa0;border:none;color:#fff;font-size:15px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .18s}
+  .arr:hover{background:#4e6878}
+  .arr:first-child{border-radius:6px 0 0 6px}
+  .arr:last-child{border-radius:0 6px 6px 0}
 
-  /* MAP */
-  .map-area { padding: 18px 24px; display: flex; justify-content: center; }
-  .map-frame { width: 560px; background: #fff; border: 1.5px solid #aaa; border-radius: 6px; overflow: hidden; }
-  .ftabs { display: flex; border-bottom: 1px solid #e8d8d5; background: #fde8e5; }
-  .ftab {
-    flex: 1; padding: 7px 4px; font-family: 'DM Sans', sans-serif;
-    font-size: 11px; font-weight: 600; color: #7a5a55; border: none;
-    background: none; cursor: pointer; border-bottom: 2px solid transparent; transition: all .15s;
+  /* ── MAP ── */
+  .map-area{padding:18px 24px;display:flex;justify-content:center}
+  .map-frame{width:560px;background:#fff;border:1.5px solid #aaa;border-radius:6px;overflow:hidden}
+  .ftabs{display:flex;border-bottom:1px solid #e8d8d5;background:#fde8e5}
+  .ftab{flex:1;padding:7px 4px;font-family:'DM Sans',sans-serif;font-size:11px;font-weight:600;color:#7a5a55;border:none;background:none;cursor:pointer;border-bottom:2px solid transparent;transition:all .15s}
+  .ftab.active{color:#c0392b;border-bottom-color:#c0392b;background:#fff}
+  .ftab:hover:not(.active){color:#c0392b}
+  .map-svg{display:block;width:100%;transition:opacity .3s}
+  .map-svg.fading{opacity:0}
+  .tip-strip{text-align:center;font-size:11px;color:#7a5a55;padding:5px 10px;background:#fff8f6;border-top:1px solid #f0e0dc;min-height:24px}
+
+  /* ── LEGEND ── */
+  .legend{display:flex;gap:10px;flex-wrap:wrap;padding:0 24px 8px}
+  .leg{display:flex;align-items:center;gap:4px;font-size:10px;color:#7a5a55}
+  .leg-sq{width:9px;height:9px;border-radius:2px}
+
+  /* ── INFO STRIP ── */
+  .info{margin:0 24px 14px;background:#fff;border:1.5px solid #f0a89f;border-radius:6px;padding:12px 16px;display:flex;gap:18px;align-items:flex-start}
+  .info-main{flex:1}
+  .info-name{font-family:'Playfair Display',serif;font-size:15px;color:#c0392b;margin-bottom:5px}
+  .info-desc{font-size:12px;color:#7a5a55;line-height:1.6}
+  .info-tags{display:flex;gap:5px;flex-wrap:wrap;margin-top:8px}
+  .tag{background:#fde8e5;border:1px solid #f0a89f;border-radius:20px;padding:2px 9px;font-size:10px;color:#922b21;font-weight:500}
+  .info-hrs{font-size:11px;color:#7a5a55;white-space:nowrap}
+  .info-hrs strong{color:#c0392b;display:block;font-size:11px;margin-bottom:2px}
+
+  /* ── FOOTER ── */
+  .footer{border-top:1.5px solid #f0a89f;padding:10px 18px;display:flex;align-items:center;justify-content:space-between}
+  .help-btn{font-size:13px;font-weight:600;color:#c0392b;cursor:pointer;text-decoration:underline;background:none;border:none;font-family:'DM Sans',sans-serif}
+  .help-btn:hover{color:#922b21}
+
+  /* ── MODAL (About/Help etc.) ── */
+  .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:100;align-items:center;justify-content:center}
+  .overlay.open{display:flex}
+  .mbox{background:#fff;border-radius:14px;padding:28px 32px;max-width:400px;width:90%;box-shadow:0 16px 48px rgba(0,0,0,.3)}
+  .mbox h2{font-family:'Playfair Display',serif;font-size:19px;color:#c0392b;margin-bottom:10px}
+  .mbox p{font-size:13px;color:#7a5a55;line-height:1.65}
+  .mclose{margin-top:18px;padding:8px 24px;background:#f0c060;border:1.5px solid #d4a017;border-radius:5px;font-size:13px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif}
+  .mclose:hover{background:#d4a017;color:#fff}
+
+  /* ── TOAST ── */
+  .toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%) translateY(60px);background:#2c1a17;color:#fff;padding:9px 22px;border-radius:22px;font-size:13px;font-weight:500;transition:transform .3s;pointer-events:none;z-index:200}
+  .toast.show{transform:translateX(-50%) translateY(0)}
+
+  /* ════════════════════════════════════════
+     PHOTO LIGHTBOX
+  ════════════════════════════════════════ */
+  .lightbox{
+    display:none;position:fixed;inset:0;z-index:500;
+    background:rgba(0,0,0,.92);
+    flex-direction:column;align-items:center;justify-content:center;
+    animation:lbIn .25s ease;
   }
-  .ftab.active { color: #c0392b; border-bottom-color: #c0392b; background: #fff; }
-  .ftab:hover:not(.active) { color: #c0392b; }
-  .map-svg { display: block; width: 100%; transition: opacity .3s; }
-  .map-svg.fading { opacity: 0; }
-  .tip-strip {
-    text-align: center; font-size: 11px; color: #7a5a55;
-    padding: 5px 10px; background: #fff8f6;
-    border-top: 1px solid #f0e0dc; min-height: 24px;
+  .lightbox.open{display:flex}
+  @keyframes lbIn{from{opacity:0}to{opacity:1}}
+
+  /* Close X */
+  .lb-close{
+    position:absolute;top:20px;right:24px;
+    width:44px;height:44px;border-radius:50%;
+    background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.3);
+    color:#fff;font-size:20px;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+    transition:all .18s;z-index:10;
+  }
+  .lb-close:hover{background:rgba(192,57,43,.8);border-color:#c0392b}
+
+  /* Header info */
+  .lb-header{
+    position:absolute;top:22px;left:24px;right:80px;
+    display:flex;flex-direction:column;gap:2px;
+  }
+  .lb-room-name{font-family:'Playfair Display',serif;font-size:18px;color:#fff;font-weight:700}
+  .lb-room-sub{font-size:12px;color:rgba(255,255,255,.6)}
+
+  /* Main image area */
+  .lb-img-wrap{
+    position:relative;width:100%;max-width:820px;
+    display:flex;align-items:center;justify-content:center;
+    padding:80px 80px 60px;
+  }
+  .lb-img{
+    width:100%;max-height:60vh;object-fit:contain;
+    border-radius:10px;box-shadow:0 8px 40px rgba(0,0,0,.6);
+    transition:opacity .25s,transform .25s;
+  }
+  .lb-img.sliding-out{opacity:0;transform:translateX(-30px)}
+  .lb-img.sliding-in{animation:slideIn .25s ease forwards}
+  @keyframes slideIn{from{opacity:0;transform:translateX(30px)}to{opacity:1;transform:translateX(0)}}
+
+  /* Arrow buttons */
+  .lb-arrow{
+    position:absolute;top:50%;transform:translateY(-50%);
+    width:52px;height:52px;border-radius:50%;
+    background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.3);
+    color:#fff;font-size:22px;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;
+    transition:all .18s;
+  }
+  .lb-arrow:hover{background:rgba(240,192,96,.8);border-color:#f0c060;color:#2c1a17}
+  .lb-arrow.lb-prev{left:20px}
+  .lb-arrow.lb-next{right:20px}
+
+  /* Dots / counter */
+  .lb-counter{
+    position:absolute;bottom:18px;left:50%;transform:translateX(-50%);
+    display:flex;align-items:center;gap:8px;
+  }
+  .lb-dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.3);transition:background .2s,transform .2s;cursor:pointer}
+  .lb-dot.active{background:#f0c060;transform:scale(1.3)}
+
+  /* Caption */
+  .lb-caption{
+    position:absolute;bottom:40px;left:50%;transform:translateX(-50%);
+    font-size:12px;color:rgba(255,255,255,.5);white-space:nowrap;
   }
 
-  /* LEGEND */
-  .legend { display: flex; gap: 10px; flex-wrap: wrap; padding: 0 24px 8px; }
-  .leg { display: flex; align-items: center; gap: 4px; font-size: 10px; color: #7a5a55; }
-  .leg-sq { width: 9px; height: 9px; border-radius: 2px; }
+  /* Placeholder photo SVG style */
+  .lb-photo-placeholder{
+    width:100%;height:340px;
+    border-radius:10px;overflow:hidden;
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    position:relative;
+  }
 
-  /* INFO STRIP */
-  .info {
-    margin: 0 24px 14px; background: #fff;
-    border: 1.5px solid #f0a89f; border-radius: 6px;
-    padding: 12px 16px; display: flex; gap: 18px; align-items: flex-start;
-  }
-  .info-main { flex: 1; }
-  .info-name { font-family: 'Playfair Display', serif; font-size: 15px; color: #c0392b; margin-bottom: 5px; }
-  .info-desc { font-size: 12px; color: #7a5a55; line-height: 1.6; }
-  .info-tags { display: flex; gap: 5px; flex-wrap: wrap; margin-top: 8px; }
-  .tag {
-    background: #fde8e5; border: 1px solid #f0a89f;
-    border-radius: 20px; padding: 2px 9px;
-    font-size: 10px; color: #922b21; font-weight: 500;
-  }
-  .info-hrs { font-size: 11px; color: #7a5a55; white-space: nowrap; }
-  .info-hrs strong { color: #c0392b; display: block; font-size: 11px; margin-bottom: 2px; }
-
-  /* FOOTER */
-  .footer {
-    border-top: 1.5px solid #f0a89f; padding: 10px 18px;
-    display: flex; align-items: center; justify-content: space-between;
-  }
-  .help-btn {
-    font-size: 13px; font-weight: 600; color: #c0392b;
-    cursor: pointer; text-decoration: underline;
-    background: none; border: none; font-family: 'DM Sans', sans-serif;
-  }
-  .help-btn:hover { color: #922b21; }
-
-  /* MODAL */
-  .overlay {
-    display: none; position: fixed; inset: 0;
-    background: rgba(0,0,0,.5); z-index: 100;
-    align-items: center; justify-content: center;
-  }
-  .overlay.open { display: flex; }
-  .mbox {
-    background: #fff; border-radius: 14px; padding: 28px 32px;
-    max-width: 400px; width: 90%; box-shadow: 0 16px 48px rgba(0,0,0,.3);
-  }
-  .mbox h2 { font-family: 'Playfair Display', serif; font-size: 19px; color: #c0392b; margin-bottom: 10px; }
-  .mbox p { font-size: 13px; color: #7a5a55; line-height: 1.65; }
-  .mclose {
-    margin-top: 18px; padding: 8px 24px;
-    background: #f0c060; border: 1.5px solid #d4a017;
-    border-radius: 5px; font-size: 13px; font-weight: 600;
-    cursor: pointer; font-family: 'DM Sans', sans-serif;
-  }
-  .mclose:hover { background: #d4a017; color: #fff; }
-
-  /* TOAST */
-  .toast {
-    position: fixed; bottom: 28px; left: 50%;
-    transform: translateX(-50%) translateY(60px);
-    background: #2c1a17; color: #fff; padding: 9px 22px;
-    border-radius: 22px; font-size: 13px; font-weight: 500;
-    transition: transform .3s; pointer-events: none; z-index: 200;
-  }
-  .toast.show { transform: translateX(-50%) translateY(0); }
+  /* Keyboard hint */
+  .lb-keys{position:absolute;bottom:16px;right:24px;font-size:10px;color:rgba(255,255,255,.3)}
 </style>
 </head>
 <body>
@@ -197,7 +206,7 @@
     <div class="map-frame">
       <div class="ftabs" id="ftabs"></div>
       <svg id="map-svg" class="map-svg" viewBox="0 0 560 220" xmlns="http://www.w3.org/2000/svg"></svg>
-      <div class="tip-strip" id="tip">Hover over a room to see details</div>
+      <div class="tip-strip" id="tip">Click a room to view photos · Hover to see details</div>
     </div>
   </div>
 
@@ -211,6 +220,7 @@
     <div class="leg"><svg width="9" height="9" style="flex-shrink:0"><circle cx="4.5" cy="4.5" r="4" fill="#1D9E75"/></svg>Open</div>
     <div class="leg"><svg width="9" height="9" style="flex-shrink:0"><circle cx="4.5" cy="4.5" r="4" fill="#EF9F27"/></svg>Busy</div>
     <div class="leg"><svg width="9" height="9" style="flex-shrink:0"><circle cx="4.5" cy="4.5" r="4" fill="#E24B4A"/></svg>Closed</div>
+    <div class="leg" style="margin-left:auto;color:#c0392b;font-weight:600;cursor:default">📷 Click room for photos</div>
   </div>
 
   <!-- INFO STRIP -->
@@ -234,7 +244,7 @@
 
 </div>
 
-<!-- MODAL -->
+<!-- MODAL (About / Contact / Help) -->
 <div class="overlay" id="modal" onclick="if(event.target.id==='modal')closeModal()">
   <div class="mbox">
     <h2 id="m-title"></h2>
@@ -246,235 +256,395 @@
 <!-- TOAST -->
 <div class="toast" id="toast"></div>
 
+<!-- ════════════════════════════════════════
+     PHOTO LIGHTBOX
+════════════════════════════════════════ -->
+<div class="lightbox" id="lightbox">
+
+  <!-- Close button -->
+  <button class="lb-close" onclick="closeLightbox()" title="Close (Esc)">&#x2715;</button>
+
+  <!-- Room info -->
+  <div class="lb-header">
+    <div class="lb-room-name" id="lb-room-name">Room Name</div>
+    <div class="lb-room-sub"  id="lb-room-sub">Block — Floor</div>
+  </div>
+
+  <!-- Image + arrows -->
+  <div class="lb-img-wrap">
+    <!-- Left arrow -->
+    <button class="lb-arrow lb-prev" onclick="lbNav(-1)" title="Previous photo (←)">&#8249;</button>
+
+    <!-- Photo display (SVG placeholder) -->
+    <div id="lb-photo-area" style="width:100%;display:flex;align-items:center;justify-content:center"></div>
+
+    <!-- Right arrow -->
+    <button class="lb-arrow lb-next" onclick="lbNav(1)" title="Next photo (→)">&#8250;</button>
+  </div>
+
+  <!-- Dot navigation -->
+  <div class="lb-counter" id="lb-dots"></div>
+
+  <!-- Caption -->
+  <div class="lb-caption" id="lb-caption">Photo 1 of 3</div>
+
+  <!-- Keyboard hint -->
+  <div class="lb-keys">← → navigate &nbsp;|&nbsp; Esc close</div>
+
+</div>
+
 <script>
-/* ── DATA ── */
-var TYPE_FILL = { lecture:'#fde8e5', lab:'#e8f0fc', social:'#e8f5e8', reception:'#fff8e8', facility:'#f0f0f0' };
-var STATUS_COLOR = { open:'#1D9E75', busy:'#EF9F27', closed:'#E24B4A' };
-var STATUS_LABEL = { open:'Open', busy:'In use', closed:'Closed' };
+/* ══════════════════════════════════════════════════════════════
+   PHOTO DATA  —  dummy SVG placeholders for every room type.
+   When you take real phone photos, replace the entries in
+   ROOM_PHOTOS[roomId] with arrays of image paths like:
+   ['../images/rooms/CG1-1.jpg', '../images/rooms/CG1-2.jpg']
+══════════════════════════════════════════════════════════════ */
+
+/* Colour palette per room type — used to generate unique placeholder images */
+var TYPE_COLORS = {
+  lecture:  ['#fde8e5','#c0392b','Lecture Room'],
+  lab:      ['#e8f0fc','#185FA5','Lab / Studio'],
+  social:   ['#e8f5e8','#0F6E56','Social Space'],
+  reception:['#fff8e8','#8B6914','Reception'],
+  facility: ['#f0f0f0','#555555','Facilities']
+};
+
+/* Global room-type lookup — populated when buildings data is parsed */
+var ROOM_TYPE_MAP = {};  /* roomId -> type */
+var ROOM_NAME_MAP = {};  /* roomId -> name */
+
+/* Generate a placeholder SVG "photo" for a room */
+function makePlaceholderSVG(roomId, photoIdx, totalPhotos, roomName, roomType) {
+  var tc = TYPE_COLORS[roomType] || ['#f0f0f0','#555','Space'];
+  var bg = tc[0], accent = tc[1], label = tc[2];
+  var icons = {
+    lecture:  '🎓', lab:'🔬', social:'☕', reception:'🏛️', facility:'🚪'
+  };
+  var icon = icons[roomType] || '📍';
+
+  /* Each photo index gets a slightly different shade to look different */
+  var shades = ['ff','ee','dd','cc','bb'];
+  var shade  = shades[photoIdx % shades.length];
+
+  return `<svg width="760" height="340" viewBox="0 0 760 340" xmlns="http://www.w3.org/2000/svg" style="border-radius:10px;display:block">
+    <defs>
+      <linearGradient id="g${photoIdx}" x1="0" y1="0" x2="1" y2="1">
+        <stop offset="0%" stop-color="${bg}"/>
+        <stop offset="100%" stop-color="${bg}${shade}"/>
+      </linearGradient>
+      <pattern id="p${photoIdx}" x="0" y="0" width="40" height="40" patternUnits="userSpaceOnUse">
+        <rect width="40" height="40" fill="none"/>
+        <circle cx="20" cy="20" r="1.5" fill="${accent}" opacity="0.15"/>
+      </pattern>
+    </defs>
+    <!-- Background -->
+    <rect width="760" height="340" fill="url(#g${photoIdx})"/>
+    <rect width="760" height="340" fill="url(#p${photoIdx})"/>
+    <!-- Decorative corner lines -->
+    <line x1="0" y1="0" x2="120" y2="0"   stroke="${accent}" stroke-width="3" opacity="0.3"/>
+    <line x1="0" y1="0" x2="0"   y2="80"  stroke="${accent}" stroke-width="3" opacity="0.3"/>
+    <line x1="760" y1="340" x2="640" y2="340" stroke="${accent}" stroke-width="3" opacity="0.3"/>
+    <line x1="760" y1="340" x2="760" y2="260" stroke="${accent}" stroke-width="3" opacity="0.3"/>
+    <!-- Centre camera icon -->
+    <rect x="320" y="100" width="120" height="90" rx="12" fill="${accent}" opacity="0.15"/>
+    <rect x="340" y="118" width="80"  height="54" rx="8"  fill="${accent}" opacity="0.25"/>
+    <circle cx="380" cy="148" r="20" fill="${accent}" opacity="0.35"/>
+    <circle cx="380" cy="148" r="12" fill="${accent}" opacity="0.5"/>
+    <!-- Camera lens highlight -->
+    <circle cx="374" cy="142" r="3" fill="white" opacity="0.6"/>
+    <!-- "Photo N of M" badge -->
+    <rect x="310" y="216" width="140" height="26" rx="13" fill="${accent}" opacity="0.2"/>
+    <text x="380" y="233" font-family="DM Sans,sans-serif" font-size="12" fill="${accent}" text-anchor="middle" font-weight="600">Photo ${photoIdx+1} of ${totalPhotos}</text>
+    <!-- Room name -->
+    <text x="380" y="290" font-family="Playfair Display,serif" font-size="18" fill="${accent}" text-anchor="middle" font-weight="700">${roomName}</text>
+    <text x="380" y="310" font-family="DM Sans,sans-serif" font-size="12" fill="${accent}" text-anchor="middle" opacity="0.7">${label} · Cardiff Metropolitan University</text>
+    <!-- Placeholder watermark -->
+    <text x="380" y="70" font-family="DM Sans,sans-serif" font-size="11" fill="${accent}" text-anchor="middle" opacity="0.5">📷 Placeholder — replace with real photo</text>
+  </svg>`;
+}
+
+/* How many placeholder photos per room type */
+var PHOTOS_PER_TYPE = { lecture:3, lab:4, social:3, reception:2, facility:2 };
+
+/* State */
+var lbRoomId   = null;
+var lbPhotoIdx = 0;
+var lbPhotos   = [];   /* array of {type:'placeholder'|'image', src, name, type} */
+
+/* ══════════════════════════════════════════════════════════════
+   LIGHTBOX FUNCTIONS
+══════════════════════════════════════════════════════════════ */
+function openLightbox(roomId) {
+  var roomName = ROOM_NAME_MAP[roomId] || roomId;
+  var roomType = ROOM_TYPE_MAP[roomId] || 'facility';
+  var b        = BUILDINGS[curIdx];
+  var floor    = b.floors[curFloor];
+  var sub      = b.label + ' — ' + floor.label;
+
+  lbRoomId   = roomId;
+  lbPhotoIdx = 0;
+
+  /* Use real room photos where available, otherwise fall back to placeholders. */
+  lbPhotos = [];
+  if (REAL_PHOTOS[roomId] && REAL_PHOTOS[roomId].length) {
+    REAL_PHOTOS[roomId].forEach(function(src) {
+      lbPhotos.push({ kind:'image', src:src, roomName:roomName, roomType:roomType });
+    });
+  } else {
+    var n = PHOTOS_PER_TYPE[roomType] || 2;
+    for (var i = 0; i < n; i++) {
+      lbPhotos.push({ kind:'placeholder', roomName:roomName, roomType:roomType, idx:i, total:n });
+    }
+  }
+
+  /* Header */
+  document.getElementById('lb-room-name').textContent = roomName;
+  document.getElementById('lb-room-sub').textContent  = sub;
+
+  /* Render */
+  renderLbPhoto(0, false);
+
+  /* Build dots */
+  buildLbDots();
+
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function lbNav(dir) {
+  var n   = lbPhotos.length;
+  var idx = (lbPhotoIdx + dir + n) % n;
+  renderLbPhoto(idx, true);
+}
+
+function renderLbPhoto(idx, animate) {
+  lbPhotoIdx = idx;
+  var photo  = lbPhotos[idx];
+  var area   = document.getElementById('lb-photo-area');
+
+  if (animate) {
+    area.style.opacity   = '0';
+    area.style.transform = 'translateX(20px)';
+    area.style.transition = 'opacity .2s,transform .2s';
+    setTimeout(function() {
+      injectPhoto(photo, area);
+      area.style.opacity   = '1';
+      area.style.transform = 'translateX(0)';
+    }, 200);
+  } else {
+    area.style.opacity    = '1';
+    area.style.transform  = 'translateX(0)';
+    area.style.transition = '';
+    injectPhoto(photo, area);
+  }
+
+  /* Caption */
+  document.getElementById('lb-caption').textContent = 'Photo ' + (idx+1) + ' of ' + lbPhotos.length;
+
+  /* Dots */
+  var dots = document.querySelectorAll('.lb-dot');
+  dots.forEach(function(d, i) { d.classList.toggle('active', i === idx); });
+}
+
+function injectPhoto(photo, area) {
+  if (photo.kind === 'placeholder') {
+    area.innerHTML = makePlaceholderSVG(lbRoomId, photo.idx, photo.total, photo.roomName, photo.roomType);
+  } else {
+    /* Real image */
+    var img = document.createElement('img');
+    img.src   = photo.src;
+    img.alt   = photo.roomName;
+    img.style = 'width:100%;max-height:60vh;object-fit:contain;border-radius:10px;box-shadow:0 8px 40px rgba(0,0,0,.6)';
+    area.innerHTML = '';
+    area.appendChild(img);
+  }
+}
+
+function buildLbDots() {
+  var dotsEl = document.getElementById('lb-dots');
+  dotsEl.innerHTML = '';
+  lbPhotos.forEach(function(_, i) {
+    var d = document.createElement('div');
+    d.className = 'lb-dot' + (i === 0 ? ' active' : '');
+    d.onclick   = (function(idx) { return function() { renderLbPhoto(idx, true); }; })(i);
+    dotsEl.appendChild(d);
+  });
+}
+
+/* Keyboard navigation for lightbox */
+document.addEventListener('keydown', function(e) {
+  var lb = document.getElementById('lightbox');
+  if (!lb.classList.contains('open')) return;
+  if (e.key === 'ArrowLeft')  lbNav(-1);
+  if (e.key === 'ArrowRight') lbNav(1);
+  if (e.key === 'Escape')     closeLightbox();
+});
+
+/* ══════════════════════════════════════════════════════════════
+   HOW TO ADD REAL PHOTOS
+   ─────────────────────────────────────────────────────────────
+   1. Take photos with your phone and transfer them to the
+      images/rooms/ folder inside the project.
+   2. Add the room ID to REAL_PHOTOS below, e.g.:
+        var REAL_PHOTOS = {
+  'AG1': ['../images/rooms/AG1.jpg'],
+  'AG2': ['../images/rooms/AG2.jpg'],
+  'AG3': ['../images/rooms/AG3.jpg'],
+  'A101': ['../images/rooms/A101.jpg'],
+  'A102': ['../images/rooms/A102.jpg'],
+  'A103': ['../images/rooms/A103.jpg'],
+  'PG1': ['../images/rooms/PG1.jpg'],
+  'PG2': ['../images/rooms/PG2.jpg'],
+  'PG3': ['../images/rooms/PG3.jpg'],
+  'P101': ['../images/rooms/P101.jpg'],
+  'P102': ['../images/rooms/P102.jpg'],
+  'P103': ['../images/rooms/P103.jpg'],
+  'OG1': ['../images/rooms/OG1.jpg'],
+  'OG2': ['../images/rooms/OG2.jpg'],
+  'OG3': ['../images/rooms/OG3.jpg'],
+  'O101': ['../images/rooms/O101.jpg'],
+  'O102': ['../images/rooms/O102.jpg'],
+  'O103': ['../images/rooms/O103.jpg'],
+  'TG1': ['../images/rooms/TG1.jpg'],
+  'TG2': ['../images/rooms/TG2.jpg'],
+  'T101': ['../images/rooms/T101.jpg'],
+  'T102': ['../images/rooms/T102.jpg'],
+  'T103': ['../images/rooms/T103.jpg'],
+  'BG1': ['../images/rooms/BG1.jpg'],
+  'BG2': ['../images/rooms/BG2.jpg'],
+  'BG3': ['../images/rooms/BG3.jpg'],
+  'B101': ['../images/rooms/B101.jpg'],
+  'B102': ['../images/rooms/B102.jpg'],
+  'B103': ['../images/rooms/B103.jpg']
+};
+   3. In openLightbox(), the code already checks REAL_PHOTOS
+      and uses real images if they exist.
+══════════════════════════════════════════════════════════════ */
+var REAL_PHOTOS = {
+  'AG1': ['../images/rooms/AG1.jpg'],
+  'AG2': ['../images/rooms/AG2.jpg'],
+  'AG3': ['../images/rooms/AG3.jpg'],
+  'A101': ['../images/rooms/A101.jpg'],
+  'A102': ['../images/rooms/A102.jpg'],
+  'A103': ['../images/rooms/A103.jpg'],
+  'PG1': ['../images/rooms/PG1.jpg'],
+  'PG2': ['../images/rooms/PG2.jpg'],
+  'PG3': ['../images/rooms/PG3.jpg'],
+  'P101': ['../images/rooms/P101.jpg'],
+  'P102': ['../images/rooms/P102.jpg'],
+  'P103': ['../images/rooms/P103.jpg'],
+  'OG1': ['../images/rooms/OG1.jpg'],
+  'OG2': ['../images/rooms/OG2.jpg'],
+  'OG3': ['../images/rooms/OG3.jpg'],
+  'O101': ['../images/rooms/O101.jpg'],
+  'O102': ['../images/rooms/O102.jpg'],
+  'O103': ['../images/rooms/O103.jpg'],
+  'TG1': ['../images/rooms/TG1.jpg'],
+  'TG2': ['../images/rooms/TG2.jpg'],
+  'T101': ['../images/rooms/T101.jpg'],
+  'T102': ['../images/rooms/T102.jpg'],
+  'T103': ['../images/rooms/T103.jpg'],
+  'BG1': ['../images/rooms/BG1.jpg'],
+  'BG2': ['../images/rooms/BG2.jpg'],
+  'BG3': ['../images/rooms/BG3.jpg'],
+  'B101': ['../images/rooms/B101.jpg'],
+  'B102': ['../images/rooms/B102.jpg'],
+  'B103': ['../images/rooms/B103.jpg']
+};
+
+/* ══════════════════════════════════════════════════════════════
+   BUILDING DATA
+══════════════════════════════════════════════════════════════ */
+var TYPE_FILL   = { lecture:'#fde8e5', lab:'#e8f0fc', social:'#e8f5e8', reception:'#fff8e8', facility:'#f0f0f0' };
+var STATUS_COLOR= { open:'#1D9E75', busy:'#EF9F27', closed:'#E24B4A' };
+var STATUS_LABEL= { open:'Open', busy:'In use', closed:'Closed' };
 
 var BUILDINGS = [
   { id:'A', label:'Block A', name:'Block A — Main Academic Building',
-    desc:'Central academic hub with lecture theatres, seminar rooms and the main reception.',
-    tags:['Lecture Theatres','Seminar Rooms','Reception','Accessible'], hours:'Mon-Fri 08:00-21:00',
+    desc:'Main student-facing academic block with Izone, reception, theatre room, Nexus, gallery and facilities.',
+    tags:['Izone','Reception','Theatre Room','Nexus','Gallery'], hours:'Mon-Fri 08:00-21:00',
     floors:[
-      { label:'Ground', rooms:[
-        {id:'G01',name:'Main Reception',      type:'reception',status:'open',  x:14,y:18,w:110,h:55},
-        {id:'G02',name:'Lecture Theatre A1',  type:'lecture',  status:'busy',  x:136,y:18,w:160,h:80},
-        {id:'G03',name:'Seminar G03',         type:'lecture',  status:'open',  x:308,y:18,w:95,h:55},
-        {id:'G04',name:'Cafe / Canteen',      type:'social',   status:'open',  x:14,y:86,w:110,h:55},
-        {id:'G05',name:'Toilets',             type:'facility', status:'open',  x:415,y:18,w:65,h:38},
-        {id:'G06',name:'Seminar G04',         type:'lecture',  status:'closed',x:308,y:86,w:95,h:55},
-        {id:'G07',name:'Stairwell',           type:'facility', status:'open',  x:415,y:64,w:65,h:40}]},
-      { label:'Floor 1', rooms:[
-        {id:'101',name:'Lecture Theatre A2',  type:'lecture',  status:'busy',  x:14,y:18,w:150,h:80},
-        {id:'102',name:'Seminar 101',         type:'lecture',  status:'open',  x:178,y:18,w:100,h:55},
-        {id:'103',name:'Seminar 102',         type:'lecture',  status:'closed',x:178,y:86,w:100,h:55},
-        {id:'104',name:'Staff Offices',       type:'facility', status:'open',  x:292,y:18,w:110,h:123},
-        {id:'105',name:'IT Help Desk',        type:'lab',      status:'open',  x:416,y:18,w:65,h:55},
-        {id:'106',name:'Toilets',             type:'facility', status:'open',  x:416,y:86,w:65,h:55}]},
-      { label:'Floor 2', rooms:[
-        {id:'201',name:'Computer Lab 2A',     type:'lab',      status:'open',  x:14,y:18,w:140,h:85},
-        {id:'202',name:'Computer Lab 2B',     type:'lab',      status:'busy',  x:168,y:18,w:140,h:85},
-        {id:'203',name:'Seminar 201',         type:'lecture',  status:'open',  x:322,y:18,w:100,h:55},
-        {id:'204',name:'Student Lounge',      type:'social',   status:'open',  x:322,y:86,w:100,h:55},
-        {id:'205',name:'Research Office',     type:'facility', status:'open',  x:436,y:18,w:50,h:123}]}]},
+      { label:'Ground Floor', rooms:[
+        {id:'AG1',name:'Izone',        type:'reception',status:'open', x:14,y:18,w:150,h:105},
+        {id:'AG2',name:'Reception',    type:'reception',status:'open', x:178,y:18,w:150,h:105},
+        {id:'AG3',name:'Theatre Room', type:'lecture',  status:'open', x:342,y:18,w:194,h:105}]},
+      { label:'1st Floor', rooms:[
+        {id:'A101',name:'Nexus',       type:'social',  status:'open', x:14,y:18,w:150,h:105},
+        {id:'A102',name:'Gallery',     type:'social',  status:'open', x:178,y:18,w:150,h:105},
+        {id:'A103',name:'Toilets',     type:'facility',status:'open', x:342,y:18,w:194,h:105}]}]},
 
-  { id:'B', label:'Block B', name:'Block B — Technology and Engineering',
-    desc:'Specialist computing labs, electronics workshops and maker spaces for Engineering and Computing students.',
-    tags:['Computer Labs','Engineering','Workshops','Wi-Fi'], hours:'Mon-Fri 08:00-20:00',
+  { id:'P', label:'Block P', name:'Block P — Student Hub and Wellbeing',
+    desc:'Student hub block with cafe, information point, society space, gym and commuter kitchen.',
+    tags:['Cafe','Hub','Student Info','Gym','Commuter Kitchen'], hours:'Mon-Fri 08:00-20:00',
     floors:[
-      { label:'Ground', rooms:[
-        {id:'BG1',name:'Engineering Workshop',type:'lab',      status:'open',  x:14,y:18,w:180,h:105},
-        {id:'BG2',name:'Electronics Lab',     type:'lab',      status:'busy',  x:208,y:18,w:130,h:105},
-        {id:'BG3',name:'Technician Office',   type:'facility', status:'open',  x:352,y:18,w:110,h:50},
-        {id:'BG4',name:'Project Store',       type:'facility', status:'open',  x:352,y:76,w:110,h:47},
-        {id:'BG5',name:'Toilets',             type:'facility', status:'open',  x:476,y:18,w:50,h:105}]},
-      { label:'Floor 1', rooms:[
-        {id:'B101',name:'Computer Lab B1',    type:'lab',      status:'open',  x:14,y:18,w:150,h:85},
-        {id:'B102',name:'Robotics Lab',       type:'lab',      status:'busy',  x:178,y:18,w:130,h:85},
-        {id:'B103',name:'3D Print Suite',     type:'lab',      status:'open',  x:322,y:18,w:90,h:85},
-        {id:'B104',name:'Seminar B101',       type:'lecture',  status:'closed',x:426,y:18,w:100,h:55},
-        {id:'B105',name:'Staff Office',       type:'facility', status:'open',  x:426,y:80,w:100,h:23}]},
-      { label:'Floor 2', rooms:[
-        {id:'B201',name:'AI Research Lab',    type:'lab',      status:'open',  x:14,y:18,w:165,h:95},
-        {id:'B202',name:'Cybersecurity Suite',type:'lab',      status:'open',  x:193,y:18,w:140,h:95},
-        {id:'B203',name:'Postgrad Lounge',    type:'social',   status:'open',  x:347,y:18,w:105,h:95},
-        {id:'B204',name:'Seminar B201',       type:'lecture',  status:'open',  x:466,y:18,w:70,h:95}]}]},
+      { label:'Ground Floor', rooms:[
+        {id:'PG1',name:'Cafe',                   type:'social',   status:'open', x:14,y:18,w:150,h:105},
+        {id:'PG2',name:'Hub',                    type:'social',   status:'open', x:178,y:18,w:150,h:105},
+        {id:'PG3',name:'Student Info Point',     type:'reception',status:'open', x:342,y:18,w:194,h:105}]},
+      { label:'1st Floor', rooms:[
+        {id:'P101',name:'SU Society',            type:'social',   status:'open', x:14,y:18,w:150,h:105},
+        {id:'P102',name:'Gym',                   type:'social',   status:'open', x:178,y:18,w:150,h:105},
+        {id:'P103',name:'Commuter Kitchen',      type:'social',   status:'open', x:342,y:18,w:194,h:105}]}]},
 
-  { id:'C', label:'Block C', name:'Block C — Arts and Design Centre',
-    desc:'Creative studios for Art, Design and Photography. Darkrooms, large-format printing and exhibition space at Llandaff Campus.',
-    tags:['Art Studios','Photography','Exhibition','Printing'], hours:'Mon-Sat 08:00-18:00',
+  { id:'O', label:'Block O', name:'Block O — ATRIUM and Teaching Spaces',
+    desc:'ATRIUM block with reception, theatre rooms, toilets and fashion classroom spaces.',
+    tags:['Reception','ATRIUM','Theatre Room','Fashion Classroom'], hours:'Mon-Fri 08:00-21:00',
     floors:[
-      { label:'Ground', rooms:[
-        {id:'CG1',name:'Main Gallery',        type:'social',   status:'open',  x:14,y:18,w:200,h:112},
-        {id:'CG2',name:'Reception / Info',    type:'reception',status:'open',  x:228,y:18,w:110,h:52},
-        {id:'CG3',name:'Darkroom',            type:'lab',      status:'busy',  x:228,y:78,w:110,h:52},
-        {id:'CG4',name:'Print Studio',        type:'lab',      status:'open',  x:352,y:18,w:115,h:112},
-        {id:'CG5',name:'Equipment Store',     type:'facility', status:'open',  x:481,y:18,w:55,h:112}]},
-      { label:'Floor 1', rooms:[
-        {id:'C101',name:'Fine Art Studio 1A', type:'lab',      status:'busy',  x:14,y:18,w:170,h:105},
-        {id:'C102',name:'Fine Art Studio 1B', type:'lab',      status:'open',  x:198,y:18,w:140,h:105},
-        {id:'C103',name:'Critique Space',     type:'social',   status:'open',  x:352,y:18,w:105,h:65},
-        {id:'C104',name:'Staff Studios',      type:'facility', status:'open',  x:352,y:91,w:105,h:32},
-        {id:'C105',name:'Toilets',            type:'facility', status:'open',  x:471,y:18,w:65,h:105}]},
-      { label:'Floor 2', rooms:[
-        {id:'C201',name:'Photography Suite',  type:'lab',      status:'open',  x:14,y:18,w:160,h:105},
-        {id:'C202',name:'Digital Design Lab', type:'lab',      status:'busy',  x:188,y:18,w:155,h:105},
-        {id:'C203',name:'Seminar C201',       type:'lecture',  status:'closed',x:357,y:18,w:100,h:60},
-        {id:'C204',name:'MA Studio',          type:'lab',      status:'open',  x:357,y:86,w:100,h:37},
-        {id:'C205',name:'Archive Room',       type:'facility', status:'open',  x:471,y:18,w:65,h:105}]}]},
+      { label:'Ground Floor', rooms:[
+        {id:'OG1',name:'Reception',              type:'reception',status:'open', x:14,y:18,w:150,h:105},
+        {id:'OG2',name:'ATRIUM',                 type:'social',   status:'open', x:178,y:18,w:150,h:105},
+        {id:'OG3',name:'Theatre Room',           type:'lecture',  status:'open', x:342,y:18,w:194,h:105}]},
+      { label:'1st Floor', rooms:[
+        {id:'O101',name:'Toilets',               type:'facility', status:'open', x:14,y:18,w:150,h:105},
+        {id:'O102',name:'Theatre Room',          type:'lecture',  status:'open', x:178,y:18,w:150,h:105},
+        {id:'O103',name:'Fashion Classroom',     type:'lab',      status:'open', x:342,y:18,w:194,h:105}]}]},
 
-  { id:'D', label:'Block D', name:'Block D — Business School',
-    desc:'Bloomberg terminals, case study rooms and enterprise spaces for Business and Management students.',
-    tags:['Bloomberg','Case Study','Enterprise Hub','Meetings'], hours:'Mon-Fri 08:00-20:00',
+  { id:'T', label:'Block T', name:'Block T — Library and Lecture Spaces',
+    desc:'Teaching and study block with prayer room, lecture halls, IT library, library and classrooms.',
+    tags:['Prayer Room','Lecture Halls','IT Library','Library','Classroom'], hours:'Mon-Fri 08:00-22:00',
     floors:[
-      { label:'Ground', rooms:[
-        {id:'DG1',name:'Business Atrium',     type:'social',   status:'open',  x:14,y:18,w:140,h:112},
-        {id:'DG2',name:'Bloomberg Suite',     type:'lab',      status:'open',  x:168,y:18,w:140,h:55},
-        {id:'DG3',name:'Enterprise Hub',      type:'social',   status:'open',  x:168,y:81,w:140,h:49},
-        {id:'DG4',name:'Lecture Theatre D1',  type:'lecture',  status:'busy',  x:322,y:18,w:145,h:112},
-        {id:'DG5',name:'Toilets',             type:'facility', status:'open',  x:481,y:18,w:55,h:112}]},
-      { label:'Floor 1', rooms:[
-        {id:'D101',name:'Seminar D101',       type:'lecture',  status:'open',  x:14,y:18,w:110,h:75},
-        {id:'D102',name:'Seminar D102',       type:'lecture',  status:'busy',  x:138,y:18,w:110,h:75},
-        {id:'D103',name:'Seminar D103',       type:'lecture',  status:'open',  x:262,y:18,w:110,h:75},
-        {id:'D104',name:'Staff Offices',      type:'facility', status:'open',  x:386,y:18,w:80,h:75},
-        {id:'D105',name:'Case Study Suite',   type:'lecture',  status:'closed',x:14,y:103,w:220,h:32}]},
-      { label:'Floor 2', rooms:[
-        {id:'D201',name:'Research Centre',    type:'facility', status:'open',  x:14,y:18,w:175,h:105},
-        {id:'D202',name:'Computer Lab D2',    type:'lab',      status:'open',  x:203,y:18,w:150,h:105},
-        {id:'D203',name:'Seminar D201',       type:'lecture',  status:'open',  x:367,y:18,w:100,h:58},
-        {id:'D204',name:'Seminar D202',       type:'lecture',  status:'open',  x:367,y:84,w:100,h:39},
-        {id:'D205',name:'Stairwell',          type:'facility', status:'open',  x:481,y:18,w:55,h:105}]},
-      { label:'Floor 3', rooms:[
-        {id:'D301',name:"Dean's Office",      type:'facility', status:'open',  x:14,y:18,w:130,h:75},
-        {id:'D302',name:'Conference Room',    type:'lecture',  status:'open',  x:158,y:18,w:160,h:75},
-        {id:'D303',name:'Exec Boardroom',     type:'lecture',  status:'closed',x:332,y:18,w:145,h:75},
-        {id:'D304',name:'Roof Terrace',       type:'social',   status:'open',  x:14,y:103,w:463,h:30}]}]},
+      { label:'Ground Floor', rooms:[
+        {id:'TG1',name:'Prayer Room',            type:'facility', status:'open', x:14,y:18,w:240,h:105},
+        {id:'TG2',name:'Lecture Halls',          type:'lecture',  status:'open', x:268,y:18,w:268,h:105}]},
+      { label:'1st Floor', rooms:[
+        {id:'T101',name:'IT Library',            type:'lab',      status:'open', x:14,y:18,w:150,h:105},
+        {id:'T102',name:'Library',               type:'social',   status:'open', x:178,y:18,w:150,h:105},
+        {id:'T103',name:'Classroom',             type:'lecture',  status:'open', x:342,y:18,w:194,h:105}]}]},
 
-  { id:'E', label:'Block E', name:'Block E — Health and Sport Sciences',
-    desc:'Sport science labs, physiology suites, sports hall and elite athlete performance centre.',
-    tags:['Sport Labs','Physiology','Sports Hall','Performance'], hours:'Mon-Sun 07:00-22:00',
+  { id:'B', label:'Block B', name:'Block B — Art and Fashion Facilities',
+    desc:'Art and fashion block with art reception, materials library, toilets, gallery, textile studio halls and Fashmet.',
+    tags:['Art Reception','Materials Library','Gallery','Textile Studio','Fashmet'], hours:'Mon-Fri 08:30-20:00',
     floors:[
-      { label:'Ground', rooms:[
-        {id:'EG1',name:'Main Sports Hall',    type:'lab',      status:'open',  x:14,y:18,w:222,h:122},
-        {id:'EG2',name:'Changing Rooms M',    type:'facility', status:'open',  x:250,y:18,w:110,h:58},
-        {id:'EG3',name:'Changing Rooms F',    type:'facility', status:'open',  x:250,y:82,w:110,h:58},
-        {id:'EG4',name:'Kit Store',           type:'facility', status:'open',  x:374,y:18,w:100,h:58},
-        {id:'EG5',name:'Reception',           type:'reception',status:'open',  x:374,y:82,w:100,h:58},
-        {id:'EG6',name:'Toilets',             type:'facility', status:'open',  x:488,y:18,w:48,h:122}]},
-      { label:'Floor 1', rooms:[
-        {id:'E101',name:'Physiology Lab',     type:'lab',      status:'busy',  x:14,y:18,w:155,h:95},
-        {id:'E102',name:'Sport Science Lab',  type:'lab',      status:'open',  x:183,y:18,w:155,h:95},
-        {id:'E103',name:'Fitness Suite',      type:'lab',      status:'open',  x:352,y:18,w:135,h:95},
-        {id:'E104',name:'Seminar E101',       type:'lecture',  status:'open',  x:501,y:18,w:45,h:95}]}]},
-
-  { id:'F', label:'Block F', name:'Block F — Library and Learning Resources',
-    desc:'200,000+ volumes, silent study zones, group study pods and 24-hour online resources.',
-    tags:['Library','Silent Zone','Study Pods','24hr Online'], hours:'Mon-Fri 08:00-midnight',
-    floors:[
-      { label:'Ground', rooms:[
-        {id:'FG1',name:'Main Library Floor',  type:'social',   status:'open',  x:14,y:18,w:242,h:122},
-        {id:'FG2',name:'Issue / Returns',     type:'reception',status:'open',  x:270,y:18,w:110,h:58},
-        {id:'FG3',name:'Self-Service Kiosks', type:'facility', status:'open',  x:270,y:82,w:110,h:58},
-        {id:'FG4',name:'Printing Station',    type:'facility', status:'open',  x:394,y:18,w:80,h:122},
-        {id:'FG5',name:'Toilets',             type:'facility', status:'open',  x:488,y:18,w:48,h:122}]},
-      { label:'Floor 1', rooms:[
-        {id:'F101',name:'Silent Study Zone',  type:'lecture',  status:'open',  x:14,y:18,w:200,h:122},
-        {id:'F102',name:'Group Study Pods x6',type:'social',   status:'busy',  x:228,y:18,w:135,h:122},
-        {id:'F103',name:'Digital Media Suite',type:'lab',      status:'open',  x:377,y:18,w:100,h:58},
-        {id:'F104',name:'Postgrad Study',     type:'lecture',  status:'open',  x:377,y:82,w:100,h:58},
-        {id:'F105',name:'Stairwell',          type:'facility', status:'open',  x:491,y:18,w:45,h:122}]},
-      { label:'Floor 2', rooms:[
-        {id:'F201',name:'Rare Books Room',    type:'facility', status:'closed',x:14,y:18,w:130,h:95},
-        {id:'F202',name:'Research Collections',type:'lecture', status:'open',  x:158,y:18,w:162,h:95},
-        {id:'F203',name:'Archive Collections',type:'facility', status:'open',  x:334,y:18,w:143,h:95},
-        {id:'F204',name:'24hr Study Lounge',  type:'social',   status:'open',  x:14,y:121,w:463,h:32},
-        {id:'F205',name:'Stairwell',          type:'facility', status:'open',  x:491,y:18,w:45,h:135}]}]},
-
-  { id:'H', label:'Block H', name:'Block H — Student Services Hub',
-    desc:"Students Union, welfare support, careers advice, international student office and mental health counselling.",
-    tags:["Students Union",'Welfare','Careers','International'], hours:'Mon-Fri 09:00-17:00',
-    floors:[
-      { label:'Ground', rooms:[
-        {id:'HG1',name:'Students Union',      type:'social',   status:'open',  x:14,y:18,w:162,h:112},
-        {id:'HG2',name:'Welfare Office',      type:'facility', status:'open',  x:190,y:18,w:120,h:53},
-        {id:'HG3',name:'International Office',type:'facility', status:'open',  x:190,y:79,w:120,h:51},
-        {id:'HG4',name:'Careers Centre',      type:'lecture',  status:'busy',  x:324,y:18,w:152,h:112},
-        {id:'HG5',name:'Toilets',             type:'facility', status:'open',  x:490,y:18,w:46,h:112}]},
-      { label:'Floor 1', rooms:[
-        {id:'H101',name:'Counselling Suite',  type:'facility', status:'open',  x:14,y:18,w:172,h:105},
-        {id:'H102',name:'Disability Support', type:'facility', status:'open',  x:200,y:18,w:140,h:105},
-        {id:'H103',name:'Finance and Fees',   type:'facility', status:'open',  x:354,y:18,w:112,h:57},
-        {id:'H104',name:'Meeting Rooms x3',   type:'lecture',  status:'open',  x:354,y:83,w:112,h:40},
-        {id:'H105',name:'Stairwell',          type:'facility', status:'open',  x:480,y:18,w:56,h:105}]}]},
-
-  { id:'M', label:'Block M', name:'Block M — Media and Communications',
-    desc:'Broadcast studios, podcast booths, TV production suite and editing suites for Media and Journalism students.',
-    tags:['Broadcast Studio','Podcast Booths','TV Suite','Editing'], hours:'Mon-Fri 09:00-19:00',
-    floors:[
-      { label:'Ground', rooms:[
-        {id:'MG1',name:'TV Production Studio',type:'lab',      status:'busy',  x:14,y:18,w:182,h:112},
-        {id:'MG2',name:'Green Screen Room',   type:'lab',      status:'open',  x:210,y:18,w:120,h:55},
-        {id:'MG3',name:'Podcast Booths x4',   type:'lab',      status:'open',  x:210,y:81,w:120,h:49},
-        {id:'MG4',name:'Equipment Store',     type:'facility', status:'open',  x:344,y:18,w:122,h:112},
-        {id:'MG5',name:'Reception',           type:'reception',status:'open',  x:480,y:18,w:56,h:112}]},
-      { label:'Floor 1', rooms:[
-        {id:'M101',name:'Editing Suites x8',  type:'lab',      status:'busy',  x:14,y:18,w:200,h:105},
-        {id:'M102',name:'Journalism Newsroom',type:'lab',      status:'open',  x:228,y:18,w:152,h:105},
-        {id:'M103',name:'Radio Studio',       type:'lab',      status:'open',  x:394,y:18,w:92,h:58},
-        {id:'M104',name:'Seminar M101',       type:'lecture',  status:'open',  x:394,y:84,w:92,h:39},
-        {id:'M105',name:'Stairwell',          type:'facility', status:'open',  x:500,y:18,w:36,h:105}]}]},
-
-  { id:'P', label:'Block P', name:'Block P — Postgraduate Centre',
-    desc:'PhD study carrels, research labs, seminar rooms and the Graduate School office for postgraduate researchers.',
-    tags:['PhD Studies','Research Labs','Graduate School','Seminars'], hours:'Mon-Fri 08:00-20:00',
-    floors:[
-      { label:'Ground', rooms:[
-        {id:'PG1',name:'PG Reception',        type:'reception',status:'open',  x:14,y:18,w:132,h:85},
-        {id:'PG2',name:'Graduate School',     type:'facility', status:'open',  x:160,y:18,w:152,h:85},
-        {id:'PG3',name:'Research Seminar',    type:'lecture',  status:'busy',  x:326,y:18,w:152,h:85},
-        {id:'PG4',name:'Toilets',             type:'facility', status:'open',  x:492,y:18,w:44,h:85}]},
-      { label:'Floor 1', rooms:[
-        {id:'P101',name:'PhD Carrels x16',    type:'lecture',  status:'open',  x:14,y:18,w:200,h:105},
-        {id:'P102',name:'Research Lab P1',    type:'lab',      status:'open',  x:228,y:18,w:142,h:105},
-        {id:'P103',name:'Supervisor Offices', type:'facility', status:'open',  x:384,y:18,w:100,h:62},
-        {id:'P104',name:'Quiet Room',         type:'social',   status:'open',  x:384,y:88,w:100,h:35},
-        {id:'P105',name:'Stairwell',          type:'facility', status:'open',  x:498,y:18,w:38,h:105}]},
-      { label:'Floor 2', rooms:[
-        {id:'P201',name:'Research Lab P2',    type:'lab',      status:'busy',  x:14,y:18,w:162,h:105},
-        {id:'P202',name:'PG Lounge',          type:'social',   status:'open',  x:190,y:18,w:142,h:105},
-        {id:'P203',name:'Viva Room',          type:'lecture',  status:'closed',x:346,y:18,w:132,h:62},
-        {id:'P204',name:'IT Cluster',         type:'lab',      status:'open',  x:346,y:88,w:132,h:35},
-        {id:'P205',name:'Stairwell',          type:'facility', status:'open',  x:492,y:18,w:44,h:105}]}]},
-
-  { id:'T', label:'Block T', name:'Block T — ATRiuM (City Centre Campus)',
-    desc:'City-centre campus hosting Cardiff School of Art and Design and Cardiff School of Management.',
-    tags:['City Centre','Art and Design','Management','Cardiff Central'], hours:'Mon-Fri 08:00-21:00',
-    floors:[
-      { label:'Ground', rooms:[
-        {id:'TG1',name:'ATRiuM Reception',    type:'reception',status:'open',  x:14,y:18,w:130,h:92},
-        {id:'TG2',name:'Gallery / Exhibition',type:'social',   status:'open',  x:158,y:18,w:182,h:92},
-        {id:'TG3',name:'Cafe Bar',            type:'social',   status:'open',  x:354,y:18,w:122,h:92},
-        {id:'TG4',name:'Toilets',             type:'facility', status:'open',  x:490,y:18,w:46,h:92}]},
-      { label:'Floor 1', rooms:[
-        {id:'T101',name:'Design Studio 1A',   type:'lab',      status:'busy',  x:14,y:18,w:182,h:105},
-        {id:'T102',name:'Design Studio 1B',   type:'lab',      status:'open',  x:210,y:18,w:152,h:105},
-        {id:'T103',name:'Mgmt Seminar',       type:'lecture',  status:'open',  x:376,y:18,w:110,h:58},
-        {id:'T104',name:'Staff Hub',          type:'facility', status:'open',  x:376,y:84,w:110,h:39},
-        {id:'T105',name:'Stairwell',          type:'facility', status:'open',  x:500,y:18,w:36,h:105}]},
-      { label:'Floor 2', rooms:[
-        {id:'T201',name:'Photography Suite',  type:'lab',      status:'open',  x:14,y:18,w:162,h:105},
-        {id:'T202',name:'Print and Making Lab',type:'lab',     status:'busy',  x:190,y:18,w:152,h:105},
-        {id:'T203',name:'Crit Space',         type:'social',   status:'open',  x:356,y:18,w:122,h:62},
-        {id:'T204',name:'Offices',            type:'facility', status:'open',  x:356,y:88,w:122,h:35},
-        {id:'T205',name:'Stairwell',          type:'facility', status:'open',  x:492,y:18,w:44,h:105}]}]}
+      { label:'Ground Floor', rooms:[
+        {id:'BG1',name:'Art Reception',          type:'reception',status:'open', x:14,y:18,w:150,h:105},
+        {id:'BG2',name:'Materials Library',      type:'lab',      status:'open', x:178,y:18,w:150,h:105},
+        {id:'BG3',name:'Toilets',                type:'facility', status:'open', x:342,y:18,w:194,h:105}]},
+      { label:'1st Floor', rooms:[
+        {id:'B101',name:'Gallery',               type:'social',   status:'open', x:14,y:18,w:150,h:105},
+        {id:'B102',name:'Textile Studio Halls',  type:'lab',      status:'open', x:178,y:18,w:150,h:105},
+        {id:'B103',name:'Fashmet',               type:'lab',      status:'open', x:342,y:18,w:194,h:105}]}]}
 ];
 
+/* Build room lookup maps */
+BUILDINGS.forEach(function(b) {
+  b.floors.forEach(function(fl) {
+    fl.rooms.forEach(function(r) {
+      ROOM_TYPE_MAP[r.id] = r.type;
+      ROOM_NAME_MAP[r.id] = r.name;
+    });
+  });
+});
+
 var MODALS = {
-  about:   { title:'About Cardiff Met Navigator',     body:'Cardiff Metropolitan University Navigation App v1.0<br><br>Built by the SEN5002 Agile Development team to help students, staff and visitors navigate the Llandaff Campus with interactive floor plans and real-time room status.' },
-  contact: { title:'Contact Us',                      body:'Cardiff Metropolitan University<br>Llandaff Campus, Western Avenue<br>Cardiff, CF5 2YB<br><br><strong>Enquiries:</strong> +44 (0)29 2041 7000<br><strong>Email:</strong> enquiry@cardiffmet.ac.uk<br><strong>App support:</strong> navigation@cardiffmet.ac.uk' },
-  help:    { title:'Help and Navigation Guide',       body:'&#8226; Use &#9650; &#9660; arrows to cycle through all 10 blocks<br>&#8226; Hover over any room to see its details<br>&#8226; Use the floor tabs to switch between Ground, Floor 1, Floor 2 etc.<br>&#8226; Green dot = Open &nbsp; Amber = Busy &nbsp; Red = Closed<br><br><strong>Emergency:</strong> +44 (0)29 2041 7288 (Campus Security)' }
+  about:   { title:'About Cardiff Met Navigator',   body:'Cardiff Metropolitan University Navigation App v2.0<br><br>Built by the SEN5002 Agile Development team. Click any room on the floor plan to view photos of that space.<br><br>New: Enhanced login validation and room photo viewer.' },
+  contact: { title:'Contact Us',                    body:'Cardiff Metropolitan University<br>Llandaff Campus, Western Avenue<br>Cardiff, CF5 2YB<br><br><strong>Enquiries:</strong> +44 (0)29 2041 7000<br><strong>Email:</strong> enquiry@cardiffmet.ac.uk' },
+  help:    { title:'Help and Navigation Guide',     body:'&#8226; Use &#9650; &#9660; arrows to cycle through the 5 selected blocks<br>&#8226; <strong>Click any room</strong> to open its photo viewer<br>&#8226; Use &#8592; &#8594; arrows or dots to browse photos<br>&#8226; Press Esc or click &#x2715; to close the photo viewer<br>&#8226; Hover over a room to see its name and status<br>&#8226; Use floor tabs to switch between floors<br><br><strong>Emergency:</strong> +44 (0)29 2041 7288 (Campus Security)' }
 };
 
 /* ── STATE ── */
@@ -527,10 +697,24 @@ function drawFloor(bldg, fi) {
     var dy   = (oY + r.y * sc + dr + 2).toFixed(1);
     var fs   = Math.max(6.5, Math.min(9.5, r.w * sc * 0.13));
     var lbl  = r.name.length > 17 ? r.name.slice(0,16) + '...' : r.name;
-    var tipTxt = r.name + ' [' + r.id + '] — ' + STATUS_LABEL[r.status];
-    tipTxt = tipTxt.replace(/'/g, '&apos;').replace(/"/g, '&quot;');
-    html += '<g style="cursor:pointer" onmouseenter="setTip(\'' + tipTxt.replace(/'/g,"\\'") + '\')" onmouseleave="setTip(\'\')">';
-    html += '<rect x="' + rx + '" y="' + ry + '" width="' + rw + '" height="' + rh + '" fill="' + fill + '" stroke="#c8b4b0" stroke-width="0.7" rx="2"/>';
+    /* Escape for SVG attribute */
+    var esc  = r.id.replace(/'/g,"&apos;");
+
+    /* Clickable room — cursor:pointer + hover fill change */
+    html += '<g style="cursor:pointer" ';
+    html += 'onmouseenter="setTip(\'' + (r.name + ' [' + r.id + '] — ' + STATUS_LABEL[r.status] + ' · Click to view photos').replace(/'/g,"\\'") + '\')" ';
+    html += 'onmouseleave="setTip(\'\')" ';
+    html += 'onclick="openLightbox(\'' + esc + '\')">';
+
+    html += '<rect x="' + rx + '" y="' + ry + '" width="' + rw + '" height="' + rh + '" fill="' + fill + '" stroke="#c8b4b0" stroke-width="0.7" rx="2">';
+    html += '<animate attributeName="stroke" values="#c8b4b0;' + accent + ';#c8b4b0" dur="1.5s" begin="mouseover" end="mouseout" repeatCount="indefinite"/>';
+    html += '</rect>';
+
+    /* Small camera icon top-left of each room */
+    var camX = (+rx + 3).toFixed(1);
+    var camY = (+ry + 3).toFixed(1);
+    html += '<text x="' + camX + '" y="' + (+camY + 5).toFixed(1) + '" font-size="7" opacity="0.45">📷</text>';
+
     html += '<circle cx="' + dx + '" cy="' + dy + '" r="' + dr.toFixed(1) + '" fill="' + dc + '"/>';
     html += '<text x="' + cx + '" y="' + (+cy - fs*0.35).toFixed(1) + '" font-family="DM Sans,sans-serif" font-size="' + fs.toFixed(1) + '" font-weight="600" fill="#2c1a17" text-anchor="middle">' + r.id + '</text>';
     html += '<text x="' + cx + '" y="' + (+cy + fs*0.85).toFixed(1) + '" font-family="DM Sans,sans-serif" font-size="' + (fs*0.82).toFixed(1) + '" fill="#7a5a55" text-anchor="middle">' + lbl + '</text>';
@@ -554,7 +738,7 @@ function render(idx, anim) {
   tagsEl.innerHTML = '';
   for (var i = 0; i < b.tags.length; i++) {
     var sp = document.createElement('span');
-    sp.className = 'tag';
+    sp.className   = 'tag';
     sp.textContent = b.tags[i];
     tagsEl.appendChild(sp);
   }
@@ -576,7 +760,7 @@ function render(idx, anim) {
   } else {
     drawFloor(b, 0);
   }
-  setTip('Hover over a room to see details');
+  setTip('Click a room to view photos · Hover to see details');
 }
 
 /* ── SWITCH FLOOR ── */
@@ -590,7 +774,7 @@ function switchFloor(fi) {
   var svg = document.getElementById('map-svg');
   svg.classList.add('fading');
   setTimeout(function() { drawFloor(b, fi); svg.classList.remove('fading'); }, 250);
-  setTip('Hover over a room to see details');
+  setTip('Click a room to view photos · Hover to see details');
 }
 
 /* ── NAV ── */
@@ -598,7 +782,7 @@ function nextBlk() { render((curIdx + 1) % BUILDINGS.length); }
 function prevBlk() { render((curIdx - 1 + BUILDINGS.length) % BUILDINGS.length); }
 
 /* ── TOOLTIP ── */
-function setTip(t) { document.getElementById('tip').textContent = t || 'Hover over a room to see details'; }
+function setTip(t) { document.getElementById('tip').textContent = t || 'Click a room to view photos · Hover to see details'; }
 
 /* ── MODAL ── */
 function openModal(key) {
@@ -609,7 +793,14 @@ function openModal(key) {
   document.getElementById('modal').classList.add('open');
 }
 function closeModal() { document.getElementById('modal').classList.remove('open'); }
-document.addEventListener('keydown', function(e) { if (e.key === 'Escape') closeModal(); });
+
+/* Escape closes modal too, but only if lightbox is not open */
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') {
+    if (document.getElementById('lightbox').classList.contains('open')) { closeLightbox(); }
+    else { closeModal(); }
+  }
+});
 
 /* ── TOAST ── */
 var _tt;
@@ -625,9 +816,9 @@ window.addEventListener('DOMContentLoaded', function() {
   try { mode = sessionStorage.getItem('userMode') || 'Guest'; } catch(e) {}
   document.getElementById('mode-display').textContent = mode;
   var startIdx = 0;
-  for (var i = 0; i < BUILDINGS.length; i++) { if (BUILDINGS[i].id === 'C') { startIdx = i; break; } }
+  for (var i = 0; i < BUILDINGS.length; i++) { if (BUILDINGS[i].id === 'A') { startIdx = i; break; } }
   render(startIdx, false);
-  showToast('Welcome! Signed in as ' + mode);
+  showToast('Welcome ' + mode + ' — click any room to view photos');
 });
 </script>
 </body>
